@@ -13,9 +13,9 @@
 
         <div class="card-body">
              
-<form action="" method="" enctype="multipart/form-data">
+<form action="{{ route('admin.profile.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
-    
+
     <div class="row g-2">
         <div class="mb-3 col-md-6">
             <label for="name" class="form-label">User Name</label>
