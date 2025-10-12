@@ -27,6 +27,12 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    
+    'grok' => [
+        'api_key' => env('GROK_API_KEY'),
+        'base_url' => env('GROK_BASE_URL', 'https://api.x.ai/v1'),
+        'model' => env('GROK_MODEL', 'grok-3'),
+    ],
 
     'slack' => [
         'notifications' => [
