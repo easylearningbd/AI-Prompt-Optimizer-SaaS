@@ -69,6 +69,19 @@ class CategoryController extends Controller
     }
     //End Method 
 
+    public function DeleteCategory($id){
+        Category::find($id)->delete();
+
+        $notification = array(
+            'message' => 'Category Deleted Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+
+    }
+     //End Method 
+
 
 }
  
