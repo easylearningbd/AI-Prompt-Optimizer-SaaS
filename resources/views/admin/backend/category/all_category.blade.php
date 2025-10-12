@@ -13,7 +13,7 @@
                     </div>
                 </div>
 
-                <a href="apps-invoice-create.html" class="btn btn-primary"><i class="ti ti-plus me-1"></i>Add Category</a>
+                <a href="{{ route('add.category') }}" class="btn btn-primary"><i class="ti ti-plus me-1"></i>Add Category</a>
             </div>
 
 <div class="table-responsive">
@@ -34,8 +34,7 @@
     <tbody>
        @foreach ($category as $key=> $item) 
         <tr> 
-            <td><span class="fw-semibold"><a href="apps-invoice-details.html" class="text-reset">#{{ $key+1 }}</a></span></td>
-            <td>Fashion</td>
+            <td><span class="fw-semibold"><a href="apps-invoice-details.html" class="text-reset">#{{ $key+1 }}</a></span></td>  
             <td><span class="text-muted">{{ $item->name }}</span></td>
            <td><span class="text-muted">{{ $item->slug }}</span></td>
             <td>{{ Str::limit($item->description, 40) }}</td>
