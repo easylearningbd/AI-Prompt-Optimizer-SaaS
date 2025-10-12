@@ -40,9 +40,9 @@
         </li>
  
         <li class="side-nav-item">
-            <a href="apps-email.html" class="side-nav-link">
+            <a href="{{ route('all.category') }}" class="side-nav-link">
                 <span class="menu-icon"><i class="ti ti-mailbox"></i></span>
-                <span class="menu-text"> Email </span>
+                <span class="menu-text"> All Category </span>
             </a>
         </li>
 

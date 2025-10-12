@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsUser;
+use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,6 +40,17 @@ Route::middleware(['auth', IsAdmin::class])->group(function(){
   Route::get('/admin/change/password', [AdminController::class, 'AdminChangePassword'])->name('admin.change.password');
 
   Route::post('/admin/password/update', [AdminController::class, 'AdminPasswordUpdate'])->name('admin.password.update');
+
+
+
+Route::controller(CategoryController::class)->group(function(){
+    Route::get('/all/category','AllCategory')->name('all.category');
+});
+
+
+
+
+
 
 });
 
