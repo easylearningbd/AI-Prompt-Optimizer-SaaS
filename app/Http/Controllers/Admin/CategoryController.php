@@ -42,6 +42,33 @@ class CategoryController extends Controller
     }
     //End Method 
 
+    public function EditCategory($id){
+        $category = Category::find($id);
+        return view('admin.backend.category.edit_category',compact('category'));
+
+    }
+    //End Method 
+
+     public function UpdateCategory(Request $request , $id){
+
+        Category::find($id)->update([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'description' => $request->description,
+            'icon' => $request->icon,
+            'order' => $request->order,
+        ]);
+
+         $notification = array(
+            'message' => 'Category Updated Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.category')->with($notification);
+
+    }
+    //End Method 
+
 
 }
  
