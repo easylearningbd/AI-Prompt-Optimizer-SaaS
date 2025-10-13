@@ -157,6 +157,47 @@ Optimize the following prompt to make it more effective:";
   // End getCategoryGuidance Method 
 
 
+  // get avaiable models 
+
+  public function getAvailableModels(): array {
+
+    if (empty($this->apiKey)) {
+           Log::error('Grok API key is missing');
+           return [
+                'success' => false,
+                'error' => 'Grok api key is not configured'
+           ];
+        }
+
+        try {
+            
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $this->apiKey,
+            ])
+            ->timeout(10)
+            ->get($this->baseUrl . '/models');
+
+            if ($response->successful()) {
+               return [
+                'success' => true,
+                'models' => $response->json()['data'] ?? [],
+               ];
+            }
+
+            return [
+                'success' => false,
+                'error' => 'Failed to fetch models',
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+            ];
+        }
+  }
+    // End getAvailableModels Method 
+ 
 
 
 }
