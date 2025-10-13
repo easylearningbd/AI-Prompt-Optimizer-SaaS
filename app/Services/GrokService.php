@@ -63,20 +63,50 @@ class GrokService
             'stream' => false,
         ]);
 
+        if ($response->successful()) {
+            $data = $response->json();
 
+            $optimizedPrompt = $data['choices'][0]['message']['content'] ?? '';
 
+            return [
+                'success' => true,
+                'optimized_prompt' => $optimizedPrompt,
+                'tokens_used' => $data['usage']['total_tokens'] ?? 0,
+                'model_used' => $this->model
+            ];
+        }
+
+        /// Better error messages base on status code
+        $errorMessage = match ($response->status()) {
+            401 => 'Invalid API Key, please check your grok api key in the .env file',
+            404 => 'Model not found',
+            429 => 'Rate limit exceeded',
+            500,502,503 => 'Grok api is currently unavailable.',
+            default => 'Filed to optimize prompst. Status:' . $response->status(),
+        };
+
+        return [
+            'success' => false,
+            'error' => $errorMessage
+        ];
          
-    } catch (\Throwable $th) {
-        //throw $th;
-    }
-
-
-
+    } catch (\Exception $e) {
+       return [
+            'success' => false,
+            'error' => 'An Error occurred while connecting to Grok API ' .$e->getMessage(),
+       ];
+     } 
     }
     // End optimizePrompt Method 
 
 
+ /// Build system prompt based on category and language and outputformat
 
+  protected function buildSystemPrompt(string $category, string $language, string $outputFormat): string {
+    
+
+  }
+  /// End buildSystemPrompt Method 
 
 
 }
