@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Http;
 
 class GrokService
 {
-    protected = $apiKey;
-    protected = $baseUrl;
-    protected = $model;
+    protected $apiKey;
+    protected $baseUrl;
+    protected $model;
      
 
     public function __construct()
@@ -26,9 +26,56 @@ class GrokService
 
 
     // Optimize a prompt using Grok API 
-    public function optimizePrompt(){
-        
+    public function optimizePrompt(string $rawPrompt, string $category, string $language = 'english', string $outputFormat = 'text'): array 
+    {
+        // Check if API KEY IS SET 
+        if (empty($this->apiKey)) {
+           Log::error('Grok API key is missing');
+           return [
+                'success' => false,
+                'error' => 'Grok api key is not configured'
+           ];
+        }
+
+    try {
+
+        $systemPrompt = $this->buildSystemPrompt($category, $language,$outputFormat);
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->apiKey,
+            'Content-Type' => 'application/json'
+        ])
+        ->timeout(120)
+        ->post($this->baseUrl . '/chat/completions', [
+            'model' => $this->model,
+            'messages' => [
+                [
+                    'role' => 'system',
+                    'content' => $systemPrompt
+                ],
+                [
+                    'role' => 'user',
+                    'content' => $rawPrompt
+                ]
+            ],
+            'temperature' => 0.7,
+            'max_tokens' => 2000,
+            'stream' => false,
+        ]);
+
+
+
+         
+    } catch (\Throwable $th) {
+        //throw $th;
     }
+
+
+
+    }
+    // End optimizePrompt Method 
+
+
 
 
 
