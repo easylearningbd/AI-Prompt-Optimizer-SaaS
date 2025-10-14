@@ -49,10 +49,29 @@ class User extends Authenticatable
         return $this->prompts_used_this_month < ($limits[$this->subscription_plan] ?? 0);
     }
 
+    /// Get remaining prompts limit
+    public function getRemainingPromptsAttribute(): int {
+        if ($this->isAdmin()) {
+            return 999;
+        }
 
+        $limits = [
+                'free' => 5,
+                'pro' => 10,
+                'essential' => 20,
+            ];
 
+    $limit = $limits[$this->subscription_plan] ?? 0; 
+    return max(0, $limit - $this->prompts_used_this_month); 
 
+    }
 
+    public function user(){
+        return $this->hasMany(Subscription::class);
+    }
+ 
+
+    
 
 
     /**
