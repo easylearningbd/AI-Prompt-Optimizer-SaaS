@@ -29,6 +29,32 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+
+    // Check if user is admin 
+    public function isAdmin(): bool {
+        return $this->role === 'admin';
+    }
+
+    public function canOptimizePrompt(): bool {
+        if ($this->isAdmin()) {
+           return true;
+        }
+
+        $limits = [
+            'free' => 5,
+            'pro' => 10,
+            'essential' => 20,
+        ];
+
+        return $this->prompts_used_this_month < ($limits[$this->subscription_plan] ?? 0);
+    }
+
+
+
+
+
+
+
     /**
      * Get the attributes that should be cast.
      *
