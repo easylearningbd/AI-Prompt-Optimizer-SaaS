@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsUser;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\User\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,9 +17,11 @@ Route::get('/', function () {
 Route::middleware(['auth', IsUser::class])->group(function(){
 
  Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('client.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
 
 
 });
