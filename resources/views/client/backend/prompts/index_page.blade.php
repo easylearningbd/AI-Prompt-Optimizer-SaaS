@@ -107,78 +107,77 @@
 
     <!-- Prompts Grid -->
  
+  @if ($prompts->count() > 0) 
   <div class="row">
-           
+   @foreach ($prompts as $prompt) 
     <div class="col-md-6 col-lg-4 mb-4">
         <div class="card h-100 shadow-sm prompt-card">
             <div class="card-body">
                 <!-- Category & Featured Badge -->
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <span class="badge bg-primary">category</span>
-                        
-                        <span class="badge bg-warning text-dark">
-                            <i class="bi bi-star-fill"></i> Featured
-                        </span>
-                    
-                </div>
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <span class="badge bg-primary">{{ $prompt->category->name }}</span>
+            @if ($prompt->is_featured) 
+            <span class="badge bg-warning text-dark">
+                <i class="bi bi-star-fill"></i> Featured
+            </span>
+            @endif 
+        
+    </div>
 
                 <!-- Title -->
                 <h5 class="card-title mb-2">
                     <a href=" " class="text-decoration-none text-dark">
-                        prompt title 
+                        {{ $prompt->title }}
                     </a>
                 </h5>
 
                 <!-- Raw Prompt Preview -->
                 <p class="card-text text-muted small mb-3">
-                    Raw Prompt Preview
+                   {{ Str::limit($prompt->raw_prompt, 100)  }}
                 </p>
 
                 <!-- Language & Format Badges -->
                 <div class="mb-3">
                     <span class="badge bg-light text-dark border">
-                        <i class="bi bi-translate"></i> language
+                        <i class="bi bi-translate"></i> 
+                        {{ ucfirst($prompt->language) }}
                     </span>
                     <span class="badge bg-light text-dark border">
-                        <i class="bi bi-file-earmark-code"></i> output format
+                        <i class="bi bi-file-earmark-code"></i> 
+                        {{ strtoupper($prompt->output_format) }}
                     </span>
                 </div>
 
                 <!-- Stats -->
                 <div class="d-flex align-items-center gap-3 text-muted small mb-3">  
                     <span title="Views">
-                        <i class="bi bi-eye-fill"></i> views_count
+                        <i class="bi bi-eye-fill"></i> {{ $prompt->views_count }}
                     </span> 
                     <span title="Copies">
-                        <i class="bi bi-clipboard-fill"></i> copies_count
+                        <i class="bi bi-clipboard-fill"></i> 
+                        {{ $prompt->copies_count }}
                     </span>
                 </div>
 
                 <!-- User Info & Action Button -->
-                <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-                    <div class="d-flex align-items-center gap-2">
+    <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+     <div class="d-flex align-items-center gap-2">
                         
-                            <img 
-                                src=" " 
-                                alt=" " 
-                                class="rounded-circle" 
-                                width="32" 
-                                height="32"
-                            >
-                        
-                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
-                                <i class="bi bi-person-fill"></i>
-                            </div>
-                        
-                        <div>
-                            <a href=" " class="text-decoration-none text-dark small fw-bold">
-                                user
-                            </a>
-                            <div class="text-muted" style="font-size: 0.75rem;">
-                                date
-                            </div>
-                        </div>
-                    </div>
+           <img id="showImage" src="{{ (!empty($prompt->user->photo)) ? url('upload/admin_images/'.$prompt->user->photo) : url('upload/no_image.jpg') }}" class="rounded-circle avatar-xl" style="width:32px; height:32px;">
+        
+            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                <i class="bi bi-person-fill"></i>
+            </div>
+        
+        <div>
+            <a href=" " class="text-decoration-none text-dark small fw-bold">
+                {{ $prompt->user->name }}
+            </a>
+            <div class="text-muted" style="font-size: 0.75rem;">
+                {{ $prompt->created_at->diffForHumans() }}
+            </div>
+        </div>
+    </div>
                     <a href=" " class="btn btn-sm btn-outline-primary">
                         View <i class="bi bi-arrow-right"></i>
                     </a>
@@ -192,13 +191,17 @@
             </div>
         </div>
     </div>
+    @endforeach    
 
         </div>
+ 
 
         <!-- Pagination -->
         <div class="d-flex justify-content-center mt-4">
-           Pagination
+          {{ $prompts->links() }}
         </div>
+
+    @else 
     
         <!-- Empty State -->
         <div class="text-center py-5">
@@ -215,7 +218,7 @@
                 </a>
             @endauth
         </div>
-    
+    @endif 
 </div>
  
 
