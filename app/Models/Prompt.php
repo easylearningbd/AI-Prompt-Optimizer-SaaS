@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Prompt extends Model
 {
     use HasFactory;
-
+ 
     protected $guarded = [];
   
     protected $casts = [

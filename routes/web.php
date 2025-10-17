@@ -7,6 +7,7 @@ use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsUser;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\PromptController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -68,6 +69,14 @@ Route::controller(CategoryController::class)->group(function(){
 });
 
 //// End All Admin Protected Routes
+
+
+
+Route::middleware('check.subscription')->group(function () {
+    Route::get('/prompts/index/page', [PromptController::class, 'PromptIndexPage'])->name('prompts.page');
+   
+});
+
 
 
 

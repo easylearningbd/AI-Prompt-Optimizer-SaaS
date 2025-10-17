@@ -40,7 +40,7 @@
         </li>
  
         <li class="side-nav-item">
-            <a href="{{ route('all.category') }}" class="side-nav-link">
+            <a href="{{ route('prompts.page') }}" class="side-nav-link">
                 <span class="menu-icon"><i class="ti ti-mailbox"></i></span>
                 <span class="menu-text"> Create Prompts </span>
             </a>
