@@ -1,15 +1,256 @@
 @extends('client.dashboard')
-@section('client')
+@section('client') 
+
+ <div class="page-container">
+ 
+<div class="bg-light py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1 class="fw-bold mb-0">Explore Prompts</h1>
+                <p class="text-muted mb-0">Discover and learn from community-optimized prompts</p>
+            </div>
+            <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                @auth
+                    <a href=" " class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Create Prompt
+                    </a>
+                @else
+                    <a href="{{ route('register') }}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Sign Up to Create
+                    </a>
+                @endauth
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-4">
+    <!-- Filters Section -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+    <form method="GET" action=" " id="filterForm">
+        <div class="row g-3">
+            <!-- Search -->
+            <div class="col-md-4">
+                <label for="search" class="form-label small text-muted">Search</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="search" 
+                        name="search" 
+                        placeholder="Search prompts..."
+                        value="{{ request('search') }}"
+                    >
+                </div>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="col-md-4">
+                <label for="category" class="form-label small text-muted">Category</label>
+                <select class="form-select" id="category" name="category" onchange="document.getElementById('filterForm').submit()" >
+                    <option value="">All Categories</option>
+                     @foreach ($categories as $cat) 
+                      <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'seleted' : '' }} >
+                            {{ $cat->name }}
+                        </option>
+                     @endforeach
+                    
+                </select>
+            </div>
+
+            <!-- Sort By -->
+            <div class="col-md-4">
+                <label for="sort" class="form-label small text-muted">Sort By</label>
+                <select class="form-select" id="sort" name="sort" onchange="document.getElementById('filterForm').submit()">
+                    <option value="latest" {{ $sort === 'latest' ? 'selected' : '' }} >Latest</option> 
+                    <option value="trending" {{ $sort === 'trending' ? 'selected' : '' }} >Trending</option>
+                    <option value="most_viewed" {{ $sort === 'most_viewed' ? 'selected' : '' }} >Most Viewed</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-funnel"></i> Apply Filters
+            </button>
+            @if(request()->hasAny(['search', 'category', 'sort']))
+                <a href=" " class="btn btn-outline-secondary">
+                    <i class="bi bi-x-circle"></i> Clear Filters
+                </a>
+            @endif
+        </div>
+    </form>
+        </div>
+    </div>
+
+    <!-- Results Info -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h5 class="mb-0">
+                 Found
+            </h5>
+           
+                <small class="text-muted">Search results for: " "</small>
+           
+        </div>
+        <div>
+            <span class="text-muted small">
+                
+            </span>
+        </div>
+    </div>
+
+    <!-- Prompts Grid -->
+ 
+  <div class="row">
+           
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm prompt-card">
+            <div class="card-body">
+                <!-- Category & Featured Badge -->
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <span class="badge bg-primary">category</span>
+                        
+                        <span class="badge bg-warning text-dark">
+                            <i class="bi bi-star-fill"></i> Featured
+                        </span>
+                    
+                </div>
+
+                <!-- Title -->
+                <h5 class="card-title mb-2">
+                    <a href=" " class="text-decoration-none text-dark">
+                        prompt title 
+                    </a>
+                </h5>
+
+                <!-- Raw Prompt Preview -->
+                <p class="card-text text-muted small mb-3">
+                    Raw Prompt Preview
+                </p>
+
+                <!-- Language & Format Badges -->
+                <div class="mb-3">
+                    <span class="badge bg-light text-dark border">
+                        <i class="bi bi-translate"></i> language
+                    </span>
+                    <span class="badge bg-light text-dark border">
+                        <i class="bi bi-file-earmark-code"></i> output format
+                    </span>
+                </div>
+
+                <!-- Stats -->
+                <div class="d-flex align-items-center gap-3 text-muted small mb-3">  
+                    <span title="Views">
+                        <i class="bi bi-eye-fill"></i> views_count
+                    </span> 
+                    <span title="Copies">
+                        <i class="bi bi-clipboard-fill"></i> copies_count
+                    </span>
+                </div>
+
+                <!-- User Info & Action Button -->
+                <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                    <div class="d-flex align-items-center gap-2">
+                        
+                            <img 
+                                src=" " 
+                                alt=" " 
+                                class="rounded-circle" 
+                                width="32" 
+                                height="32"
+                            >
+                        
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+                        
+                        <div>
+                            <a href=" " class="text-decoration-none text-dark small fw-bold">
+                                user
+                            </a>
+                            <div class="text-muted" style="font-size: 0.75rem;">
+                                date
+                            </div>
+                        </div>
+                    </div>
+                    <a href=" " class="btn btn-sm btn-outline-primary">
+                        View <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <a href=" " class="btn btn-sm btn-outline-warning">
+                        Edit <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <a href=" " class="btn btn-sm btn-outline-danger">
+                        Delete <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
+           Pagination
+        </div>
+    
+        <!-- Empty State -->
+        <div class="text-center py-5">
+            <i class="bi bi-inbox display-1 text-muted"></i>
+            <h3 class="mt-3">No Prompts Found</h3>
+            <p class="text-muted">Try adjusting your filters or search terms.</p>
+            @auth
+                <a href=" " class="btn btn-primary mt-3">
+                    <i class="bi bi-plus-circle"></i> Create First Prompt
+                </a>
+            @else
+                <a href="{{ route('register') }}" class="btn btn-primary mt-3">
+                    <i class="bi bi-plus-circle"></i> Sign Up to Create
+                </a>
+            @endauth
+        </div>
+    
+</div>
+ 
+
+<style>
+.prompt-card {
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+}
+
+.prompt-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.badge {
+    font-weight: 500;
+    padding: 0.4em 0.6em;
+}
+
+.pagination {
+    margin-bottom: 0;
+}
+
+.page-link {
+    color: #0d6efd;
+}
+
+.page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+</style>
+ 
 
 
 
-
-
-
-
-
-
-
-
-
+</div>
 @endsection

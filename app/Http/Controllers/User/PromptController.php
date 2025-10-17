@@ -46,7 +46,7 @@ class PromptController extends Controller
      $prompts = $query->paginate(12);
      $categories = Category::active()->get();
 
-     return view('client.backend.prompts.index_page',compact('prompts','categories')); 
+     return view('client.backend.prompts.index_page',compact('prompts','categories','sort')); 
 
     }
     // End Method 
