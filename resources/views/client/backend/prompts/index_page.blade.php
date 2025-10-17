@@ -12,7 +12,7 @@
             </div>
             <div class="col-md-6 text-md-end mt-3 mt-md-0">
                 @auth
-                    <a href=" " class="btn btn-primary">
+                    <a href="{{ route('prompts.create') }}" class="btn btn-primary">
                         <i class="bi bi-plus-circle"></i> Create Prompt
                     </a>
                 @else
@@ -209,7 +209,7 @@
             <h3 class="mt-3">No Prompts Found</h3>
             <p class="text-muted">Try adjusting your filters or search terms.</p>
             @auth
-                <a href=" " class="btn btn-primary mt-3">
+                <a href="{{ route('prompts.create') }}" class="btn btn-primary mt-3">
                     <i class="bi bi-plus-circle"></i> Create First Prompt
                 </a>
             @else
