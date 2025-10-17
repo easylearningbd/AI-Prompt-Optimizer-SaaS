@@ -92,15 +92,15 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h5 class="mb-0">
-                 Found
+                {{ $prompts->total() }} {{ Str::plural('Prompt',$prompts->total() ) }} Found
             </h5>
-           
-                <small class="text-muted">Search results for: " "</small>
-           
+                @if (request('search'))  
+                <small class="text-muted">Search results for: "{{ request('search') }} "</small>
+             @endif
         </div>
         <div>
             <span class="text-muted small">
-                
+             Showing {{ $prompts->firstItem() ?? 0 }} - {{ $prompts->lastItem() ?? 0 }} of {{ $prompts->total() }}
             </span>
         </div>
     </div>
