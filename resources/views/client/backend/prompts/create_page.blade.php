@@ -35,7 +35,7 @@
         <div class="col-lg-8">
             <div class="card shadow-sm">
                 <div class="card-body p-4">
-        <form method="POST" action=" " id="promptForm">
+        <form method="POST" action="{{ route('prompts.store') }}" id="promptForm">
             @csrf
 
             <!-- Title -->
@@ -256,38 +256,42 @@
             </div>
 
             <!-- Subscription Info (for non-admin) -->
-          
-                <div class="card shadow-sm border-warning">
-                    <div class="card-body">
-                        <h6 class="fw-bold mb-3">
-                            <i class="bi bi-star-fill text-warning"></i> Your Plan
-                        </h6>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted">Current Plan:</span>
-                                <span class="badge bg-primary"> </span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted">Used This Month:</span>
-                                <strong> </strong>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span class="text-muted">Remaining:</span>
-                                <strong class="text-success"> </strong>
-                            </div>
-                        </div>
-                        
-                        
-                            <div class="alert alert-warning p-2 mb-2 small">
-                                <i class="bi bi-exclamation-triangle"></i> Running low on prompts!
-                            </div>
-                       
-                        
-                        <a href=" " class="btn btn-outline-warning btn-sm w-100">
-                            <i class="bi bi-arrow-up-circle"></i> Upgrade Plan
-                        </a>
-                    </div>
-                </div>
+@if (!auth()->user()->isAdmin()) 
+  
+<div class="card shadow-sm border-warning">
+    <div class="card-body">
+        <h6 class="fw-bold mb-3">
+            <i class="bi bi-star-fill text-warning"></i> Your Plan
+        </h6>
+        <div class="mb-3">
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Current Plan:</span>
+                <span class="badge bg-primary"> {{ strtoupper(auth()->user()->subscription_plan ) }} </span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Used This Month:</span>
+                <strong> {{ auth()->user()->prompts_used_this_month }} </strong>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="text-muted">Remaining:</span>
+                <strong class="text-success">{{ auth()->user()->remaining_prompts }} </strong>
+            </div>
+        </div>
+        
+           @if (auth()->user()->remaining_prompts <= 2 ) 
+            <div class="alert alert-warning p-2 mb-2 small">
+                <i class="bi bi-exclamation-triangle"></i> Running low on prompts!
+            </div>
+           @endif
+        
+        
+        <a href=" " class="btn btn-outline-warning btn-sm w-100">
+            <i class="bi bi-arrow-up-circle"></i> Upgrade Plan
+        </a>
+    </div>
+</div>
+@endif
+
           
         </div>
     </div>

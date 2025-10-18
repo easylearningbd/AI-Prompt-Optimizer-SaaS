@@ -71,6 +71,12 @@ class PromptController extends Controller
       // End Method 
 
 
+    public function PromptsStore(Request $request){
+
+    }
+    // End Method 
+
+
 
 
 }

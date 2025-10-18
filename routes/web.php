@@ -75,6 +75,7 @@ Route::controller(CategoryController::class)->group(function(){
 Route::middleware('check.subscription')->group(function () {
     Route::get('/prompts/index/page', [PromptController::class, 'PromptIndexPage'])->name('prompts.page');
     Route::get('/prompts/create', [PromptController::class, 'PromptsCreate'])->name('prompts.create');
+    Route::post('/prompts/store', [PromptController::class, 'PromptsStore'])->name('prompts.store');
    
 });
 
