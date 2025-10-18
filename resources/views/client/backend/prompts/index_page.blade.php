@@ -165,9 +165,7 @@
                         
            <img id="showImage" src="{{ (!empty($prompt->user->photo)) ? url('upload/admin_images/'.$prompt->user->photo) : url('upload/no_image.jpg') }}" class="rounded-circle avatar-xl" style="width:32px; height:32px;">
         
-            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
-                <i class="bi bi-person-fill"></i>
-            </div>
+            
         
         <div>
             <a href=" " class="text-decoration-none text-dark small fw-bold">

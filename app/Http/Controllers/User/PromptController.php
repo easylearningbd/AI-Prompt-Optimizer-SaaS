@@ -95,8 +95,36 @@ class PromptController extends Controller
     $category = Category::findOrFail($validated['category_id']);
 
     /// Optimize prompt using Grok API
-    
+    $result = $this->grokService->optimizePrompt(
+        $validated['raw_prompt'],
+        $category->name,
+        $validated['language'],
+        $validated['output_format'],
 
+    );
+
+    if (!$result['success']) {
+        return back()->withInput()->with('error', $result['error']);
+    }
+
+    /// Create or store to Prompt table 
+    $prompt = auth()->user()->prompts()->create([
+        'title' => $validated['title'],
+        'raw_prompt' => $validated['raw_prompt'],
+        'optimized_prompt' => $result['optimized_prompt'],
+        'category_id' => $validated['category_id'],
+        'language' => $validated['language'],
+        'output_format' => $validated['output_format'],
+        'is_public' => $request->boolean('is_public', true), 
+
+    ]);
+
+    /// Increment user usage count 
+    if (!auth()->user()->isAdmin()) {
+       auth()->user()->increment('prompts_used_this_month');
+    }
+
+    return redirect()->route('prompts.page')->with('success','Prompt Optimized successfully');
 
     }
     // End Method 
