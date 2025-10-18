@@ -26,6 +26,26 @@ class Prompt extends Model
     }
 
 
+    public function scopePublic($query){
+        return $query->where('is_public',true)->where('is_approved', true);
+    }
+
+    public function scopeFeatured($query){
+        return $query->where('is_featured',true)->where('is_approved', true);
+    }
+
+    public function scopeTrending($query){
+        return $query->where('is_approved',true)
+            ->orderByRaw('(views_count + copies_count * 3) DESC')
+            ->orderBy('created_at' ,'desc') ;
+    }
+
+    public function scopePopular($query){
+        return $query->where('is_approved',true)
+            ->orderBy('views_count','desc');
+    }
+    
+
 
 
 }

@@ -129,6 +129,26 @@ class PromptController extends Controller
     }
     // End Method 
 
+    public function PromptsShow(Prompt $prompt){
+
+        if (!$prompt->is_public || !$prompt->is_approved) {
+            if (!auth()->check() || (auth()->id() !== $prompt->user_id && !auth()->user()->isAdmin() ) ) {
+               abort(404);
+            }
+        }
+
+    $prompt->load(['user','category']);
+    $relatedPrompts = Prompt::public()
+        ->where('category_id', $prompt->category_id)
+        ->where('id', '!=', $prompt->id)
+        ->latest()
+        ->take(5)
+        ->get();
+
+        return view('client.backend.prompts.show_page',compact('prompt','relatedPrompts'));
+    }
+    // End Method 
+
 
 
 
