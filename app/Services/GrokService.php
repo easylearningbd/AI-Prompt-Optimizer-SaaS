@@ -23,7 +23,7 @@ class GrokService
             Log::warning('Grok API key is not set in configuration');
         } 
     }
-
+ 
 
     // Optimize a prompt using Grok API 
     public function optimizePrompt(string $rawPrompt, string $category, string $language = 'english', string $outputFormat = 'text'): array 

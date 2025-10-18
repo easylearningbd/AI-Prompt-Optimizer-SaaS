@@ -8,9 +8,19 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Prompt;
 use App\Models\Category;
+use App\Services\GrokService;
 
 class PromptController extends Controller
 {
+
+    protected $grokService;
+
+    public function __construct(GrokService $grokService){
+        $this->grokService = $grokService; 
+    }
+
+
+
     public function PromptIndexPage(Request $request){
 
         $query = Prompt::with(['user','category']);
@@ -72,6 +82,21 @@ class PromptController extends Controller
 
 
     public function PromptsStore(Request $request){
+
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'raw_prompt' => 'required|string|min:10',
+            'language' => 'required|string',
+            'output_format' => 'required|in:text,json',
+            'is_public' => 'boolean', 
+        ]);
+
+    $category = Category::findOrFail($validated['category_id']);
+
+    /// Optimize prompt using Grok API
+    
+
 
     }
     // End Method 
