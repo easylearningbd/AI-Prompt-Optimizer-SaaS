@@ -108,10 +108,9 @@
                 <i class="bi bi-clipboard"></i> Copy
             </button>
             <a 
-                href=" " 
+                href="{{ route('prompts.export',$prompt)  }}" 
                 class="btn btn-sm btn-outline-success"
-                title="Download"
-            >
+                title="Download" >
                 <i class="bi bi-download"></i> Export
             </a>
         </div>
@@ -147,7 +146,7 @@
           <button class="btn btn-primary copy-btn-sidebar" data-prompt="{{ $prompt->optimized_prompt }}">
                 <i class="bi bi-clipboard"></i> Copy Optimized Prompt
             </button>
-            <a href=" " class="btn btn-success">
+            <a href="{{ route('prompts.export',$prompt)  }}" class="btn btn-success">
                 <i class="bi bi-download"></i> Download/Export
             </a>
             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#shareModal">

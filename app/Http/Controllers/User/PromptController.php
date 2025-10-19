@@ -130,7 +130,7 @@ class PromptController extends Controller
     // End Method 
 
     public function PromptsShow(Prompt $prompt){
-
+    
         if (!$prompt->is_public || !$prompt->is_approved) {
             if (!auth()->check() || (auth()->id() !== $prompt->user_id && !auth()->user()->isAdmin() ) ) {
                abort(404);
@@ -156,6 +156,39 @@ class PromptController extends Controller
             'success' => true,
             'message' => 'Prompt copied to clipboard',
         ]);
+    }
+    // End Method 
+
+    public function PromptsExport(Prompt $prompt){
+
+        $data = [
+            'title' => $prompt->title,
+            'category' => $prompt->category->name,
+            'raw_prompt' => $prompt->raw_prompt,
+            'optimized_prompt' => $prompt->optimized_prompt,
+            'language' => $prompt->language,
+            'output_format' => $prompt->output_format,
+            'created_at' => $prompt->created_at->toDateTimeString(),
+        ];
+
+
+        if ($prompt->output_format === 'json') {
+           return response()->json($data,200, [
+            'Content-Disposition' => 'attachment; filename="prompt-'. $prompt->id . '.json',
+           ]);
+        }
+
+        $content = "Title: {$data['title']}\n\n";
+        $content .= "Category : {$data['category']}\n\n";
+        $content .= "Raw Prompt: {$data['raw_prompt']}\n\n";
+        $content .= "Optimized Prompt: {$data['optimized_prompt']}\n\n";
+        $content .= "Language: {$data['language']}\n";
+        $content .= "Created: {$data['created_at']}"; 
+
+        return response($content, 200, [
+            'Content-Type' => 'text/plain',
+            'Content-Disposition' => 'attachment; filename="prompt-' . $prompt->id . '.txt"',
+        ]); 
     }
     // End Method 
 
