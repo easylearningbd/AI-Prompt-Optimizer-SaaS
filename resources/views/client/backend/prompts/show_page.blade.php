@@ -227,13 +227,13 @@
         <h6 class="mb-0 fw-bold">Related Prompts</h6>
     </div>
     <div class="list-group list-group-flush">
-        
-            <a href=" " class="list-group-item list-group-item-action">
+       @foreach ($relatedPrompts as $related) 
+            <a href="{{ route('prompts.show',$related) }} " class="list-group-item list-group-item-action">
                 <div class="d-flex justify-content-between align-items-start">
                     <div class="flex-grow-1">
-                        <h6 class="mb-1">prompt code </h6>
+                        <h6 class="mb-1"> {{ Str::limit($related->title, 50) }} </h6>
                         <small class="text-muted">
-                            By  Main User
+                            By  {{$related->user->name}}
                         </small>
                     </div>
                     <span class="badge bg-light text-dark">
@@ -241,13 +241,10 @@
                     </span>
                 </div>
             </a>
+             @endforeach
         
     </div>
-    <div class="card-footer bg-white text-center">
-        <a href=" " class="text-decoration-none">
-            View all in Category <i class="bi bi-arrow-right"></i>
-        </a>
-    </div>
+     
 </div>
           
         </div>
