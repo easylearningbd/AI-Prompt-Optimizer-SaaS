@@ -50,6 +50,11 @@ class Prompt extends Model
     public function incrementCopies(){
         $this->increment('copies_count');
     }
+
+    /// Increment Views 
+    public function incrementViews(){
+        $this->increment('views_count');
+    }
  
 
 

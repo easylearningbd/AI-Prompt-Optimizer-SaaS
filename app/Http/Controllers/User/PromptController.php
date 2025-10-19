@@ -130,7 +130,9 @@ class PromptController extends Controller
     // End Method 
 
     public function PromptsShow(Prompt $prompt){
-    
+       
+        $prompt->incrementViews();
+
         if (!$prompt->is_public || !$prompt->is_approved) {
             if (!auth()->check() || (auth()->id() !== $prompt->user_id && !auth()->user()->isAdmin() ) ) {
                abort(404);
