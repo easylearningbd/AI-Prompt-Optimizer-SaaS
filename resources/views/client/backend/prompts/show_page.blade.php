@@ -23,13 +23,13 @@
                 <i class="bi bi-star-fill"></i> Featured
             </span> 
             @endif 
-             @if ($prompt->is_public)
+             @if (!$prompt->is_public)
             <span class="badge bg-secondary">
                 <i class="bi bi-lock-fill"></i> Private
             </span>
              @endif 
         
-            @if ($prompt->is_approved)
+            @if (!$prompt->is_approved)
             <span class="badge bg-danger">
                 <i class="bi bi-exclamation-triangle-fill"></i> Pending Approval
             </span>
@@ -76,10 +76,10 @@
 <!-- Stats Bar -->
 <div class="d-flex align-items-center gap-4 mb-4 text-muted">
     <span title="Views">
-        <i class="bi bi-eye-fill"></i> 6 views
+        <i class="bi bi-eye-fill"></i> {{ number_format($prompt->views_count) }} views
     </span> 
     <span title="Copies">
-        <i class="bi bi-clipboard-fill"></i> 3 copies
+        <i class="bi bi-clipboard-fill"></i> {{ number_format($prompt->copies_count) }} copies
     </span>
 </div>
 
@@ -89,7 +89,7 @@
         <i class="bi bi-file-text text-primary"></i> Original Prompt
     </h5>
     <div class="alert alert-light border">
-        <p class="mb-0">raw_prompt</p>
+        <p class="mb-0">{{ $prompt->raw_prompt }}</p>
     </div>
 </div>
 
@@ -119,7 +119,7 @@
     </div>
     <div class="card bg-light border-0">
         <div class="card-body">
-            <pre class="mb-0" style="white-space: pre-wrap; word-wrap: break-word; font-family: 'Courier New', monospace; font-size: 0.9rem;">asdasdf asfasdfasdfasfasfas sda fsd fsa f</pre>
+            <pre class="mb-0" style="white-space: pre-wrap; word-wrap: break-word; font-family: 'Courier New', monospace; font-size: 0.9rem;"> {{ $prompt->optimized_prompt }} </pre>
         </div>
     </div>
 </div>
@@ -168,38 +168,31 @@
         <a href=" ">
              
                 <img 
-                    src=" " 
-                    alt=" " 
+                    src="{{ (!empty($prompt->user->photo)) ? url('upload/admin_images/'.$prompt->user->photo) : url('upload/no_image.jpg') }}" 
+                    alt="{{ $prompt->user->name }} " 
                     class="rounded-circle mb-3" 
                     width="80" 
                     height="80"
-                >
-            
-                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                    <i class="bi bi-person-fill fs-1"></i>
-                </div>
+                > 
            
         </a>
         <h5 class="fw-bold mb-1">
             <a href=" " class="text-decoration-none text-dark">
-                 User Name
+               {{ $prompt->user->name }}
             </a>
         </h5>
-        <p class="text-muted mb-2">@User Name</p>
-        
-        
-            <p class="small text-muted mb-3"> </p>
-        
-
+        <p class="text-muted mb-2">{{ $prompt->user->email }}</p>
+         
+            <p class="small text-muted mb-3"> </p> 
         <div class="d-flex justify-content-center gap-4 mb-3">
             <div>
-                <strong class="d-block">3</strong>
+                <strong class="d-block">{{  $prompt->user->prompts()->count() }}</strong>
                 <small class="text-muted">Prompts</small>
             </div> 
            
         </div>
 
-        <a href=" " class="btn btn-outline-primary btn-sm w-100">
+        <a href="{{ route('user.profile') }}" class="btn btn-outline-primary btn-sm w-100">
             View Profile
         </a>
     </div>
@@ -217,9 +210,9 @@
                     <i class="bi  fs-3"></i>
                 </div>
                 <div>
-                    <h6 class="mb-1 fw-bold"> Category Name </h6>
+                    <h6 class="mb-1 fw-bold"> {{ $prompt->category->name }} </h6>
                     <small class="text-muted">
-                       3 prompts
+                       {{ $prompt->category->prompts->count() }} prompts
                     </small>
                 </div>
             </div>

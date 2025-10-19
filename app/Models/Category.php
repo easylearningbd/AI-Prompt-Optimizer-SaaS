@@ -38,4 +38,9 @@ class Category extends Model
         return $query->where('is_active',true)->orderBy('order');
     }
 
+    public function prompts(){
+        return $this->hasMany(Prompt::class);
+    }
+
+
 }
