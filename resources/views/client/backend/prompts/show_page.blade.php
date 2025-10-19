@@ -321,9 +321,12 @@ function copyToClipboard(text,button) {
 
 
 // All Copy buttons 
-
-
-
+document.querySelectorAll('.copy-btn, .copy-btn-main, .copy-btn-sidebar').forEach(button => {
+    button.addEventListener('click', function(){
+        const promptText = this.getAttribute('data-prompt');
+        copyToClipboard(promptText,this);
+    });
+});
 
 </script>
   

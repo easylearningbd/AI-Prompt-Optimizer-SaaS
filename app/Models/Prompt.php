@@ -44,6 +44,12 @@ class Prompt extends Model
         return $query->where('is_approved',true)
             ->orderBy('views_count','desc');
     }
+
+
+    /// Increment Copies 
+    public function incrementCopies(){
+        $this->increment('copies_count');
+    }
     
 
 

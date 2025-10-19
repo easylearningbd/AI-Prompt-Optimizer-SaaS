@@ -78,6 +78,7 @@ Route::middleware('check.subscription')->group(function () {
     Route::post('/prompts/store', [PromptController::class, 'PromptsStore'])->name('prompts.store');
 
     Route::get('/prompts/{prompt}', [PromptController::class, 'PromptsShow'])->name('prompts.show');
+    Route::post('/prompts/{prompt}/copy', [PromptController::class, 'PromptsCopy'])->name('prompts.copy');
    
 });
 

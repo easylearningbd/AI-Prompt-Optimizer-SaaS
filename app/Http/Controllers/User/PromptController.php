@@ -149,6 +149,16 @@ class PromptController extends Controller
     }
     // End Method 
 
+    public function PromptsCopy(Prompt $prompt){
+        $prompt->incrementCopies();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Prompt copied to clipboard',
+        ]);
+    }
+    // End Method 
+
 
 
 
