@@ -81,6 +81,8 @@ Route::middleware('check.subscription')->group(function () {
     
     Route::post('/prompts/{prompt}/copy', [PromptController::class, 'PromptsCopy'])->name('prompts.copy');
     Route::get('/prompts/{prompt}/export', [PromptController::class, 'PromptsExport'])->name('prompts.export');
+
+    Route::get('/prompts/{prompt}/edit', [PromptController::class, 'PromptsEdit'])->name('prompts.edit');
    
 });
 

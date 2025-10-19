@@ -179,7 +179,7 @@
     <a href="{{ route('prompts.show',$prompt) }} " class="btn btn-sm btn-outline-primary">
         View <i class="bi bi-arrow-right"></i>
     </a>
-    <a href=" " class="btn btn-sm btn-outline-warning">
+    <a href="{{ route('prompts.edit',$prompt) }}" class="btn btn-sm btn-outline-warning">
         Edit <i class="bi bi-arrow-right"></i>
     </a>
     <a href=" " class="btn btn-sm btn-outline-danger">

@@ -195,6 +195,25 @@ class PromptController extends Controller
     // End Method 
 
 
+    public function PromptsEdit(Prompt $prompt){
+
+        $categories = Category::active()->get();
+        $languages = [
+            'english' => 'English',
+            'spanish' => 'Spanish',
+            'french' => 'French',
+            'german' => 'German',
+            'chinese' => 'Chinese',
+            'japanese' => 'Japanese',
+            'hindi' => 'Hindi',
+            'bengali' => 'Bengali',
+        ];
+
+    return view('client.backend.prompts.edit_page',compact('categories','languages','prompt'));
+    }
+      // End Method 
+
+
 
 
 }
