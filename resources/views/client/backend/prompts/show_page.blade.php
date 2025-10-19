@@ -103,9 +103,8 @@
             <button 
                 type="button" 
                 class="btn btn-sm btn-outline-primary copy-btn" 
-                data-prompt=""
-                title="Copy to clipboard"
-            >
+                data-prompt="{{ $prompt->optimized_prompt }}"
+                title="Copy to clipboard" >
                 <i class="bi bi-clipboard"></i> Copy
             </button>
             <a 
@@ -145,7 +144,7 @@
     </div>
     <div class="card-body">
         <div class="d-grid gap-2">
-          <button class="btn btn-primary copy-btn-sidebar" data-prompt=" ">
+          <button class="btn btn-primary copy-btn-sidebar" data-prompt="{{ $prompt->optimized_prompt }}">
                 <i class="bi bi-clipboard"></i> Copy Optimized Prompt
             </button>
             <a href=" " class="btn btn-success">
@@ -289,7 +288,44 @@
 
 <!-- Delete Modal -->
  
+<script>
+/// Copy to clipboard functionality 
+function copyToClipboard(text,button) {
+    navigator.clipboard.writeText(text).then(() => {
+        const originalHtml = button.innerHTML;
 
+        /// SHOW Success message
+        button.innerHTML = 'Copied!';
+        button.classList.add('btn-success');
+        button.classList.remove('btn-outline-primary','btn-primary');
+
+        // Track copy count 
+        fetch('{{ route("prompts.copy",$prompt) }}',{
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+            }
+        });
+
+        // Restore Original state after 2 sec
+        setTimeout(() => {
+            button.innerHTML = originalHtml;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-outline-primary')
+        },2000);
+    }).catch(err => {
+        alert('Faild to copy to clipboard');
+    });
+}
+
+
+// All Copy buttons 
+
+
+
+
+</script>
   
  
 <style>
