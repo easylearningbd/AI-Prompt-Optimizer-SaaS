@@ -14,7 +14,7 @@
             </h4>
         </div>
         <div class="card-body p-4">
-<form method="POST" action=" " id="promptEditForm">
+<form method="POST" action="{{ route('prompts.update',$prompt) }} " id="promptEditForm">
     @csrf
     @method('PUT')
 
@@ -112,6 +112,7 @@
 <div class="mb-4">
     <div class="card border">
         <div class="card-body">
+           <input type="hidden" name="is_public" value="0">  
             <div class="form-check form-switch">
                 <input 
                     class="form-check-input" 

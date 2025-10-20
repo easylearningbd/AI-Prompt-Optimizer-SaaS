@@ -213,6 +213,26 @@ class PromptController extends Controller
     }
       // End Method 
 
+    public function PromptsUpdate(Request $request, Prompt $prompt){
+
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'is_public' => 'boolean'
+        ]);
+
+        $prompt->update($validated);
+
+        $notification = array(
+            'message' => 'Prompt Updated Successfully!',
+            'alert-type' => 'success'
+            );
+
+        return redirect()->route('prompts.show',$prompt)->with($notification);
+
+    }
+     // End Method 
+
 
 
 
