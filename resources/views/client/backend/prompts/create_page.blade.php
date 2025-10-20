@@ -257,7 +257,7 @@
 
             <!-- Subscription Info (for non-admin) -->
 @if (!auth()->user()->isAdmin()) 
-  
+   
 <div class="card shadow-sm border-warning">
     <div class="card-body">
         <h6 class="fw-bold mb-3">

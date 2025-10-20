@@ -106,12 +106,33 @@
                     
                     </ul>
 
-                    <!-- Help Box -->
-                    <div class="help-box text-center">
-                        <h5 class="fw-semibold fs-16">Unlimited Access</h5>
-                        <p class="mb-3 text-muted">Upgrade to plan to get access to unlimited reports</p>
-                        <a href="javascript: void(0);" class="btn btn-danger btn-sm">Upgrade</a>
-                    </div>
+<!-- Help Box -->
+@if (!auth()->user()->isAdmin()) 
+<div class="help-box text-left">
+    <h5 class="fw-semibold fs-16">Your Plan</h5>
+    <p class="mb-3 text-muted">
+        <span class="text-muted">Current Plan: </span>
+        <span class="badge bg-primary"> {{ strtoupper(auth()->user()->subscription_plan ) }} </span>
+    </p>
+
+     <p class="mb-3 text-muted">
+    <span class="text-muted"> Used This Month: </span>
+    <span class="badge bg-primary">  {{ auth()->user()->prompts_used_this_month }} </span>
+   </p>
+     <p class="mb-3 text-muted">
+    <span class="text-muted"> Remaining: </span>
+    <span class="badge bg-primary">  {{ auth()->user()->remaining_prompts }} </span>
+    </p>
+
+    @if (auth()->user()->remaining_prompts <= 2 ) 
+            <div class="alert alert-warning p-2 mb-2 small">
+                <i class="bi bi-exclamation-triangle"></i> Running low on prompts!
+            </div>
+           @endif
+     
+    <a href="" class="btn btn-danger btn-sm">Upgrade</a>
+</div>
+@endif
 
                     <div class="clearfix"></div>
                 </div>
