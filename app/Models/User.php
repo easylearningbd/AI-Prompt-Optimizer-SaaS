@@ -71,7 +71,7 @@ class User extends Authenticatable
         return $this->hasMany(Prompt::class);
     }
 
-    public function user(){
+    public function subscriptions(){
         return $this->hasMany(Subscription::class);
     }
  

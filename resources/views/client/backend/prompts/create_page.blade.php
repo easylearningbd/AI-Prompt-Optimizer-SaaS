@@ -285,7 +285,7 @@
            @endif
         
         
-        <a href=" " class="btn btn-outline-warning btn-sm w-100">
+        <a href="{{ route('subscriptions.index') }}" class="btn btn-outline-warning btn-sm w-100">
             <i class="bi bi-arrow-up-circle"></i> Upgrade Plan
         </a>
     </div>

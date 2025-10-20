@@ -130,7 +130,7 @@
             </div>
            @endif
      
-    <a href="" class="btn btn-danger btn-sm">Upgrade</a>
+    <a href="{{ route('subscriptions.index') }}" class="btn btn-danger btn-sm">Upgrade</a>
 </div>
 @endif
 

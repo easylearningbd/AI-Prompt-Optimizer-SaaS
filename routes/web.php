@@ -8,6 +8,7 @@ use App\Http\Middleware\IsUser;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\PromptController;
+use App\Http\Controllers\User\SubscriptionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -73,6 +74,7 @@ Route::controller(CategoryController::class)->group(function(){
 
 
 Route::middleware('check.subscription')->group(function () {
+
     Route::get('/prompts/index/page', [PromptController::class, 'PromptIndexPage'])->name('prompts.page');
     Route::get('/prompts/create', [PromptController::class, 'PromptsCreate'])->name('prompts.create');
     Route::post('/prompts/store', [PromptController::class, 'PromptsStore'])->name('prompts.store');
@@ -87,6 +89,19 @@ Route::middleware('check.subscription')->group(function () {
     Route::put('/prompts/{prompt}', [PromptController::class, 'PromptsUpdate'])->name('prompts.update');
     Route::delete('/prompts/{prompt}', [PromptController::class, 'PromptsDelete'])->name('prompts.delete');
    
+
+
+Route::controller(SubscriptionController::class)->group(function(){
+    Route::get('/subscriptions/index','SubscriptionsIndex')->name('subscriptions.index');
+    
+});
+
+
+
+
+
+
+
 });
 
 
