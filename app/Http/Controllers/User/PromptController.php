@@ -234,6 +234,21 @@ class PromptController extends Controller
      // End Method 
 
 
+     public function PromptsDelete(Prompt $prompt){
+
+        $prompt->delete();
+
+        $notification = array(
+            'message' => 'Prompt Deleted Successfully!',
+            'alert-type' => 'success'
+            );
+
+        return redirect()->route('prompts.page')->with($notification);
+ 
+     }
+      // End Method 
+
+
 
 
 }

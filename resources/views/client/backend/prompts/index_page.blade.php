@@ -182,7 +182,7 @@
     <a href="{{ route('prompts.edit',$prompt) }}" class="btn btn-sm btn-outline-warning">
         Edit <i class="bi bi-arrow-right"></i>
     </a>
-    <a href=" " class="btn btn-sm btn-outline-danger">
+    <a href="{{ route('prompts.delete',$prompt) }}" class="btn btn-sm btn-outline-danger">
         Delete <i class="bi bi-arrow-right"></i>
     </a>
                 </div>

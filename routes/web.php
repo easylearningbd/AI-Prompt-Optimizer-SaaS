@@ -85,6 +85,7 @@ Route::middleware('check.subscription')->group(function () {
     Route::get('/prompts/{prompt}/edit', [PromptController::class, 'PromptsEdit'])->name('prompts.edit');
 
     Route::put('/prompts/{prompt}', [PromptController::class, 'PromptsUpdate'])->name('prompts.update');
+    Route::delete('/prompts/{prompt}', [PromptController::class, 'PromptsDelete'])->name('prompts.delete');
    
 });
 

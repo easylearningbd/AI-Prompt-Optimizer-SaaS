@@ -281,20 +281,20 @@
                 </div>
                 <p class="mb-2">You are about to delete:</p>
                 <div class="bg-light p-3 rounded mb-3">
-                    <strong>prompt title </strong>
+                    <strong>{{ $prompt->title }} </strong>
                 </div>
                 <p class="mb-0">This will permanently delete:</p>
                 <ul class="mb-0">
                     <li>The prompt and all its content</li>
-                    <li>All   likes</li>
-                    <li>All   comments</li>
+                    <li>All {{ number_format($prompt->views_count) }} View Count</li>
+                    <li>All {{ number_format($prompt->copies_count) }} Copies Count</li>
                 </ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <i class="bi bi-x-circle"></i> Cancel
                 </button>
-                <form action=" " method="POST" class="d-inline">
+                <form action="{{ route('prompts.delete',$prompt) }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">
