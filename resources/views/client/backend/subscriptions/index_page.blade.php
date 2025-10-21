@@ -58,24 +58,26 @@
             <div class="mb-3">
                 <div class="d-flex justify-content-between mb-2">
                     <span class="text-muted">Remaining:</span>
-                    <strong class="text-success">4</strong>
+                    <strong class="text-success">{{ auth()->user()->remaining_prompts }}</strong>
                 </div>
-                 
+                 @if (auth()->user()->subscription_renewed_at) 
                     <div class="d-flex justify-content-between">
                         <span class="text-muted">Renews on:</span>
-                        <strong>date</strong>
+                        <strong>{{ auth()->user()->subscription_renewed_at->addMonth()->format('M d, Y') }}</strong>
                     </div>
+                 @endif
                 
             </div>
 
-           
-                <a href=" " class="btn btn-primary w-100">
-                    <i class="bi bi-arrow-up-circle"></i> Upgrade Plan
-                </a>
-             
-                <button class="btn btn-success w-100" disabled>
-                    <i class="bi bi-check-circle-fill"></i> Best Plan Active
-                </button>
+    @if (auth()->user()->subscription_plan !== 'essential' ) 
+    <a href=" " class="btn btn-primary w-100">
+        <i class="bi bi-arrow-up-circle"></i> Upgrade Plan
+    </a>
+    @else 
+    <button class="btn btn-success w-100" disabled>
+        <i class="bi bi-check-circle-fill"></i> Best Plan Active
+    </button>
+     @endif    
             
         </div>
     </div>
@@ -90,8 +92,9 @@
             </h5>
         </div>
 <div class="card-body">
-   
-        <div class="table-responsive">
+
+@if ($subscriptions->count() > 0)  
+<div class="table-responsive">
 <table class="table table-hover">
     <thead>
         <tr>
@@ -103,53 +106,58 @@
         </tr>
     </thead>
     <tbody>
-       
-            <tr>
-                <td>
-                    <span class="badge bg-primary">
-                       subscription Plan
+      @foreach ($subscriptions as $subscription) 
+        <tr>
+            <td>
+                <span class="badge bg-primary">
+                  {{ strtoupper($subscription->plan ) }}
+                </span>
+            </td>
+            <td>
+                <strong>${{ $subscription->amount }}</strong>
+            </td>
+            <td>
+                  @if ($subscription->status === 'approved')
+                        
+                    <span class="badge bg-success">
+                        <i class="bi bi-check-circle-fill"></i> Approved
                     </span>
-                </td>
-                <td>
-                    <strong>$3443</strong>
-                </td>
-                <td>
-                    
-                        <span class="badge bg-success">
-                            <i class="bi bi-check-circle-fill"></i> Approved
-                        </span>
-                 
-                        <span class="badge bg-warning text-dark">
-                            <i class="bi bi-clock-fill"></i> Pending
-                        </span>
-                    
-                        <span class="badge bg-danger">
-                            <i class="bi bi-x-circle-fill"></i> Rejected
-                        </span>
-                   
-                </td>
-                <td>
-                    <small>created_at</small>
-                </td>
-                <td>
-                    <button 
-                        class="btn btn-sm btn-outline-primary" 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#detailModal"
-                    >
-                        <i class="bi bi-eye"></i> View
-                    </button>
-                </td>
-            </tr>
+                  @elseif ($subscription->status === 'pending')
+                    <span class="badge bg-warning text-dark">
+                        <i class="bi bi-clock-fill"></i> Pending
+                    </span>
+                  @else 
+                    <span class="badge bg-danger">
+                        <i class="bi bi-x-circle-fill"></i> Rejected
+                    </span>
+                  @endif
+            </td>
+            <td>
+                <small>{{ $subscription->created_at->format('M d, Y') }}</small>
+            </td>
+            <td>
+                <button 
+                    class="btn btn-sm btn-outline-primary" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#detailModal"
+                >
+                    <i class="bi bi-eye"></i> View
+                </button>
+            </td>
+        </tr>
+        @endforeach 
         
     </tbody>
    </table>
    </div>
 
+
         <!-- Pagination -->
         <div class="d-flex justify-content-center mt-3">
             Pagination
         </div>
+
+    @else     
     
         <div class="text-center py-5">
             <i class="bi bi-inbox display-1 text-muted"></i>
@@ -159,7 +167,7 @@
                 <i class="bi bi-plus-circle"></i> Upgrade Your Plan
             </a>
         </div>
-    
+    @endif
 </div>
     </div>
 </div>
