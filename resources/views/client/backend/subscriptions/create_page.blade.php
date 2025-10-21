@@ -14,69 +14,116 @@
         <div class="alert alert-info d-flex align-items-center mb-5">
             <i class="bi bi-info-circle-fill fs-3 me-3"></i>
             <div>
-                <strong>Current Plan:  </strong>
+                <strong>Current Plan: {{ strtoupper(auth()->user()->subscription_plan) }} </strong>
                 <br>
-                <small>You have   prompt optimizations remaining this month.</small>
+                <small>You have <strong>{{ auth()->user()->remaining_prompts }}</strong> prompt optimizations remaining this month.</small>
             </div>
         </div>
 
         <!-- Pricing Plans -->
         <div class="row justify-content-center mb-5">
+        @php
+            $plans = [
+                'free' => [
+                    'name' => 'Free',
+                    'price' => 0,
+                    'limit' => 5,
+                    'features' => [
+                        '5 prompt optimizations per month',
+                        'Access to all category',
+                        'Community features',
+                        'Basic Support',
+                  ],
+                'current' => auth()->user()->subscription_plan === 'free'
+              ],
+            'pro' => [
+                    'name' => 'Pro',
+                    'price' => 9.99,
+                    'limit' => 10,
+                    'features' => [
+                        '10 prompt optimizations per month',
+                        'Access to all category',
+                        'Priority Community features',
+                        'JSON Export Support',
+                        'Email Support',
+                  ],
+                'current' => auth()->user()->subscription_plan === 'pro'
+              ], 
+              'essential' => [
+                    'name' => 'Essential',
+                    'price' => 19.99,
+                    'limit' => 20,
+                    'features' => [
+                        '20 prompt optimizations per month',
+                        'Access to all category',
+                        'Priority Community features',
+                        'JSON Export Support',
+                        'Priority Email Support',
+                  ],
+                'current' => auth()->user()->subscription_plan === 'essential'
+              ], 
+        ];
+        @endphp
             
 
-          
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 shadow  ">
-                        
-                            <div class="card-header bg-primary text-white text-center">
-                                <small class="fw-bold">MOST POPULAR</small>
-                            </div>
-                       
-                        
-                            <div class="card-header bg-success text-white text-center">
-                                <small class="fw-bold">CURRENT PLAN</small>
-                            </div>
-                        
-                        <div class="card-body text-center d-flex flex-column">
-                            <h3 class="card-title fw-bold"> </h3>
-                            <div class="my-4">
-                                <span class="h1 fw-bold">$3</span>
-                                
-                                    <span class="text-muted">/month</span>
-                               
-                            </div>
-                            <p class="text-muted mb-4">
-                                <strong>  prompts</strong> per month
-                            </p>
-                            <ul class="list-unstyled text-start mb-4 flex-grow-1">
-                                
-                                    <li class="mb-2">
-                                        <i class="bi bi-check-circle-fill text-success"></i>
-                                         
-                                    </li>
-                              
-                            </ul>
-                            
-                           
-                                <button class="btn btn-success w-100" disabled>
-                                    <i class="bi bi-check-circle-fill"></i> Current Plan
-                                </button>
-                            
-                                <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary w-100">
-                                    View Dashboard
-                                </a>
-                           
-                                <button 
-                                    class="btn btn-primary w-100" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#upgradeModal "
-                                >
-                                    Upgrade to  
-                                </button>
-                            
-                        </div>
-                    </div>
+    @foreach ($plans as $key => $plan ) 
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow {{ $key === 'pro' ? 'border-primary' : '' }} {{ $plan['current'] ? 'border-success border-3' : '' }}  ">
+                
+            @if ($key === 'pro' && !$plan['current']) 
+                <div class="card-header bg-primary text-white text-center">
+                    <small class="fw-bold">MOST POPULAR</small>
                 </div>
+                 @endif
+            
+                @if ($plan['current'])  
+                <div class="card-header bg-success text-white text-center">
+                    <small class="fw-bold">CURRENT PLAN</small>
+                </div>
+                @endif
+            
+            <div class="card-body text-center d-flex flex-column">
+                <h3 class="card-title fw-bold">{{ $plan['name'] }} </h3>
+                <div class="my-4">
+                    <span class="h1 fw-bold">${{ $plan['price'] }}</span>
+                    @if ($plan['price'] > 0) 
+                        <span class="text-muted">/month</span>
+                   @endif
+                    
+                </div>
+                <p class="text-muted mb-4">
+                    <strong>{{ $plan['limit'] }} prompts</strong> per month
+                </p>
+                <ul class="list-unstyled text-start mb-4 flex-grow-1">
+                    
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                                
+                        </li>
+                    
+                </ul>
+                
+                
+                    <button class="btn btn-success w-100" disabled>
+                        <i class="bi bi-check-circle-fill"></i> Current Plan
+                    </button>
+                
+                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary w-100">
+                        View Dashboard
+                    </a>
+                
+                    <button 
+                        class="btn btn-primary w-100" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#upgradeModal "
+                    >
+                        Upgrade to  
+                    </button>
+                
+            </div>
+        </div>
+    </div>
+  @endforeach    
            
         </div>
 
