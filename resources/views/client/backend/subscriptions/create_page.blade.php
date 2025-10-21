@@ -95,30 +95,31 @@
                     <strong>{{ $plan['limit'] }} prompts</strong> per month
                 </p>
                 <ul class="list-unstyled text-start mb-4 flex-grow-1">
-                    
+                    @foreach ($plan['features'] as $feature) 
                         <li class="mb-2">
-                            <i class="bi bi-check-circle-fill text-success"></i>
-                                
+                            <i class="ri-arrow-right-s-fill"></i>
+                             {{$feature}}   
                         </li>
-                    
+                    @endforeach 
                 </ul>
                 
-                
-                    <button class="btn btn-success w-100" disabled>
-                        <i class="bi bi-check-circle-fill"></i> Current Plan
-                    </button>
-                
-                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary w-100">
-                        View Dashboard
-                    </a>
-                
-                    <button 
-                        class="btn btn-primary w-100" 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#upgradeModal "
-                    >
-                        Upgrade to  
-                    </button>
+   @if ($plan['current'])     
+    <button class="btn btn-success w-100" disabled>
+        <i class="bi bi-check-circle-fill"></i> Current Plan
+    </button>
+    @elseif($key === 'free')
+    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary w-100">
+        View Dashboard
+    </a>
+     @else 
+    <button 
+        class="btn btn-primary w-100" 
+        data-bs-toggle="modal" 
+        data-bs-target="#upgradeModal{{ ucfirst($key) }}"
+    >
+        Upgrade to {{ $plan['name'] }} 
+    </button>
+    @endif   
                 
             </div>
         </div>
@@ -171,8 +172,8 @@
 </div>
 
 <!-- Upgrade Modals -->
- 
-    <div class="modal fade" id="upgradeModal " tabindex="-1">
+  @foreach (['pro' => 9.99, 'essential' => 19.99] as $planKey => $price )
+    <div class="modal fade" id="upgradeModal{{ ucfirst($planKey) }}" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
@@ -280,7 +281,8 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> 
+  @endforeach
  
 
 <script>
