@@ -93,6 +93,7 @@ Route::middleware('check.subscription')->group(function () {
 
 Route::controller(SubscriptionController::class)->group(function(){
     Route::get('/subscriptions/index','SubscriptionsIndex')->name('subscriptions.index');
+    Route::get('/subscriptions/create','SubscriptionsCreate')->name('subscriptions.create');
     
 });
 

@@ -70,7 +70,7 @@
             </div>
 
     @if (auth()->user()->subscription_plan !== 'essential' ) 
-    <a href=" " class="btn btn-primary w-100">
+    <a href="{{ route('subscriptions.create') }}" class="btn btn-primary w-100">
         <i class="bi bi-arrow-up-circle"></i> Upgrade Plan
     </a>
     @else 
@@ -163,7 +163,7 @@
             <i class="bi bi-inbox display-1 text-muted"></i>
             <h5 class="mt-3">No Subscription History</h5>
             <p class="text-muted">You haven't made any subscription payments yet.</p>
-            <a href=" " class="btn btn-primary mt-3">
+            <a href="{{ route('subscriptions.create') }}" class="btn btn-primary mt-3">
                 <i class="bi bi-plus-circle"></i> Upgrade Your Plan
             </a>
         </div>
