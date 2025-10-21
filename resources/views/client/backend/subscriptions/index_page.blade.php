@@ -154,7 +154,7 @@
 
         <!-- Pagination -->
         <div class="d-flex justify-content-center mt-3">
-            Pagination
+            {{ $subscriptions->links() }}
         </div>
 
     @else     

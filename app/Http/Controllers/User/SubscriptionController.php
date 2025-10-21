@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Subscription;
 
 class SubscriptionController extends Controller
 {
@@ -40,6 +41,43 @@ class SubscriptionController extends Controller
 
     }
     // End Method 
+
+
+    public function SubscriptionsStore(Request $request){
+
+        $validated = $request->validate([
+            'plan' => 'required|in:pro,essential',
+            'transaction_id' => 'required',
+            'payment_proof' => 'required|image|mimes:png,jpg,jpeg,pdf|max:5120'
+        ]);
+
+        $amounts = [
+            'pro' => 9.99,
+            'essential' => 19.99,
+        ];
+
+        // Store payment proof 
+        $path = $request->file('payment_proof')->store('payment_proofs','public');
+
+        // store data in subscription table 
+        Subscription::create([
+            'user_id' => auth()->id(), 
+            'plan' => $validated['plan'],
+            'amount' => $amounts[$validated['plan']],
+            'transaction_id' => $validated['transaction_id'],
+            'payment_proof' => $path,
+            'status' => 'pending',  
+        ]);
+
+         $notification = array(
+            'message' => 'Subscription request submitted! Wait for admin Approval',
+            'alert-type' => 'success'
+            );
+
+        return redirect()->route('subscriptions.index')->with($notification);
+
+    }
+     // End Method 
 
 
 

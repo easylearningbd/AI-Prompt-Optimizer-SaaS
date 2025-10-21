@@ -182,7 +182,7 @@
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-<form action=" " method="POST" enctype="multipart/form-data">
+<form action="{{ route('subscriptions.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="plan" value="{{$planKey}}">
     
