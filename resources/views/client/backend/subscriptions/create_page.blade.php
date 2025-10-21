@@ -178,107 +178,107 @@
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">
-                        <i class="bi bi-credit-card"></i> Upgrade to   Plan
+                        <i class="bi bi-credit-card"></i> Upgrade to {{ ucfirst($planKey) }}  Plan
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <form action=" " method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="plan" value=" ">
-                    
-                    <div class="modal-body">
-                        <!-- Bank Details -->
-                        <div class="alert alert-info">
-                            <h6 class="fw-bold mb-3">
-                                <i class="bi bi-bank"></i> Bank Transfer Details
-                            </h6>
-                            <div class="row">
-                                <div class="col-md-6 mb-2">
-                                    <strong>Bank Name:</strong> Example Bank
-                                </div>
-                                <div class="col-md-6 mb-2">
-                                    <strong>Account Name:</strong> Prompt Library Inc.
-                                </div>
-                                <div class="col-md-6 mb-2">
-                                    <strong>Account Number:</strong> 1234567890
-                                </div>
-                                <div class="col-md-6 mb-2">
-                                    <strong>Routing Number:</strong> 987654321
-                                </div>
-                                <div class="col-md-12 mt-2">
-                                    <strong>Amount to Transfer:</strong> 
-                                    <span class="badge bg-success fs-6">$3</span>
-                                </div>
-                            </div>
-                        </div>
+<form action=" " method="POST" enctype="multipart/form-data">
+    @csrf
+    <input type="hidden" name="plan" value="{{$planKey}}">
+    
+    <div class="modal-body">
+        <!-- Bank Details -->
+        <div class="alert alert-info">
+            <h6 class="fw-bold mb-3">
+                <i class="bi bi-bank"></i> Bank Transfer Details
+            </h6>
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <strong>Bank Name:</strong> Example Bank
+                </div>
+                <div class="col-md-6 mb-2">
+                    <strong>Account Name:</strong> Prompt Library Inc.
+                </div>
+                <div class="col-md-6 mb-2">
+                    <strong>Account Number:</strong> 1234567890
+                </div>
+                <div class="col-md-6 mb-2">
+                    <strong>Routing Number:</strong> 987654321
+                </div>
+                <div class="col-md-12 mt-2">
+                    <strong>Amount to Transfer:</strong> 
+                    <span class="badge bg-success fs-6">${{ $price }}</span>
+                </div>
+            </div>
+        </div>
 
-                        <!-- Transaction ID -->
-                        <div class="mb-3">
-                            <label for="transaction_id_ " class="form-label fw-bold">
-                                Transaction ID / Reference Number <span class="text-danger">*</span>
-                            </label>
-                            <input 
-                                type="text" 
-                                class="form-control @error('transaction_id') is-invalid @enderror" 
-                                id="transaction_id_ " 
-                                name="transaction_id" 
-                                placeholder="Enter your transaction ID"
-                                required
-                            >
-                            @error('transaction_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            <small class="text-muted">
-                                Enter the transaction ID from your bank transfer receipt
-                            </small>
-                        </div>
+        <!-- Transaction ID -->
+        <div class="mb-3">
+            <label for="transaction_id_{{$planKey}}" class="form-label fw-bold">
+                Transaction ID / Reference Number <span class="text-danger">*</span>
+            </label>
+            <input 
+                type="text" 
+                class="form-control @error('transaction_id') is-invalid @enderror" 
+                id="transaction_id_{{$planKey}}" 
+                name="transaction_id" 
+                placeholder="Enter your transaction ID"
+                required
+            >
+            @error('transaction_id')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            <small class="text-muted">
+                Enter the transaction ID from your bank transfer receipt
+            </small>
+        </div>
 
-                        <!-- Payment Proof -->
-                        <div class="mb-3">
-                            <label for="payment_proof_ " class="form-label fw-bold">
-                                Payment Proof (Screenshot/Receipt) <span class="text-danger">*</span>
-                            </label>
-                            <input 
-                                type="file" 
-                                class="form-control @error('payment_proof') is-invalid @enderror" 
-                                id="payment_proof_ " 
-                                name="payment_proof" 
-                                accept="image/*,.pdf"
-                                required
-                            >
-                            @error('payment_proof')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            <small class="text-muted">
-                                Upload a clear screenshot of your payment confirmation (JPG, PNG, or PDF, max 5MB)
-                            </small>
-                        </div>
+        <!-- Payment Proof -->
+        <div class="mb-3">
+            <label for="payment_proof_{{$planKey}}" class="form-label fw-bold">
+                Payment Proof (Screenshot/Receipt) <span class="text-danger">*</span>
+            </label>
+            <input 
+                type="file" 
+                class="form-control @error('payment_proof') is-invalid @enderror" 
+                id="payment_proof_{{$planKey}}" 
+                name="payment_proof" 
+                accept="image/*,.pdf"
+                required
+            >
+            @error('payment_proof')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            <small class="text-muted">
+                Upload a clear screenshot of your payment confirmation (JPG, PNG, or PDF, max 5MB)
+            </small>
+        </div>
 
-                        <!-- Preview Area -->
-                        <div id="preview_ " class="mb-3 d-none">
-                            <label class="form-label fw-bold">Preview:</label>
-                            <img id="preview_img_ " src="" class="img-fluid border rounded" style="max-height: 300px;">
-                        </div>
+        <!-- Preview Area -->
+        <div id="preview_{{$planKey}}" class="mb-3 d-none">
+            <label class="form-label fw-bold">Preview:</label>
+            <img id="preview_img_{{$planKey}}" src="" class="img-fluid border rounded" style="max-height: 300px;">
+        </div>
 
-                        <!-- Terms -->
-                        <div class="alert alert-warning">
-                            <i class="bi bi-exclamation-triangle-fill"></i>
-                            <strong>Important:</strong>
-                            <ul class="mb-0 mt-2">
-                                <li>Your subscription will be activated within 24 hours after verification</li>
-                                <li>Make sure the transaction ID and payment proof are accurate</li>
-                                <li>Invalid or fake submissions will be rejected</li>
-                                <li>Subscription is valid for 30 days from activation date</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-check-circle"></i> Submit for Verification
-                        </button>
-                    </div>
-                </form>
+        <!-- Terms -->
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <strong>Important:</strong>
+            <ul class="mb-0 mt-2">
+                <li>Your subscription will be activated within 24 hours after verification</li>
+                <li>Make sure the transaction ID and payment proof are accurate</li>
+                <li>Invalid or fake submissions will be rejected</li>
+                <li>Subscription is valid for 30 days from activation date</li>
+            </ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle"></i> Submit for Verification
+        </button>
+    </div>
+</form>
             </div>
         </div>
     </div> 
