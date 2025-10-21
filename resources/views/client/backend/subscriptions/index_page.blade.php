@@ -139,7 +139,7 @@
                 <button 
                     class="btn btn-sm btn-outline-primary" 
                     data-bs-toggle="modal" 
-                    data-bs-target="#detailModal"
+                    data-bs-target="#detailModal{{ $subscription->id }}"
                 >
                     <i class="bi bi-eye"></i> View
                 </button>
@@ -175,7 +175,86 @@
     </div>
 </div>
 
-<!-- Detail Modals -->
+<!-- Detail Modals --> 
+@foreach ($subscriptions as $item) 
+    <div class="modal fade" id="detailModal{{ $item->id }}" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-receipt"></i> Subscription Details
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Plan</label>
+                            <div class="fw-bold">{{ strtoupper($item->plan) }}</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Amount</label>
+                            <div class="fw-bold">${{$item->amount}}</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Status</label>
+                            <div>
+        @if ($item->status === 'approved')                
+        <span class="badge bg-success">Approved</span>
+        @elseif ($item->status === 'pending')
+        <span class="badge bg-warning text-dark">Pending</span>
+        @else                        
+        <span class="badge bg-danger">Rejected</span>
+        @endif                     
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Transaction ID</label>
+                            <div class="fw-bold">{{ $item->transaction_id }} </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Submitted</label>
+                            <div>{{ $item->created_at->format('M d, Y h:i A') }}</div>
+                        </div>
+                      @if ($item->starts_at)  
+                            <div class="col-md-6 mb-3">
+                                <label class="text-muted small">Valid Period</label>
+                                <div>
+                                   {{ $item->starts_at->format('M d, Y') }} - 
+                                   {{ $item->ends_at->format('M d, Y') }}
+                                </div>
+                            </div>
+                       @endif
+                       
+                    </div>
+
+                    @if ($item->payment_proof)  
+                        <div class="mb-3">
+                            <label class="text-muted small">Payment Proof</label>
+                            <div class="mt-2">
+                                <a href="{{ asset('storage/' .$item->payment_proof) }}" target="_blank" class="btn btn-outline-primary">
+                                    <i class="bi bi-file-earmark-image"></i> View Payment Proof
+                                </a>
+                            </div>
+                        </div>
+                     @endif
+                   
+
+              @if ($item->admin_notes) 
+                <div class="alert alert-info">
+                    <strong>Admin Notes:</strong>
+                    <p class="mb-0">{{ $item->admin_notes }}</p>
+                </div>
+             @endif
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ @endforeach
  
  
 @endsection
