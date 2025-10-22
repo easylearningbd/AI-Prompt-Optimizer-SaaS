@@ -85,6 +85,33 @@ class SubscriptionController extends Controller
     }
     // End Method 
 
+    public function SubscriptionStatusUpdate(Request $request,Subscription $subscription ){
+
+        $subscription->update([
+            'status' => 'approved',
+            'starts_at' => now(),
+            'ends_at' => now()->addDays(30),
+            'admin_notes' => 'Approved by Admin'
+        ]);
+
+        // Update user plan data 
+
+        $subscription->user->update([
+            'subscription_plan' => $subscription->plan,
+            'prompts_used_this_month' => 0,
+            'subscription_renewed_at' => now(),
+        ]);
+
+
+        $notification = array(
+            'message' => 'Subscription Approved successfully',
+            'alert-type' => 'success'
+            );
+
+        return redirect()->back()->with($notification); 
+    }
+     // End Method 
+
 
 
 

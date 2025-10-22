@@ -50,9 +50,11 @@
              </td>
             
             <td class="pe-3">
-                <div class="hstack gap-1 justify-content-end">  
-                    <a href="{{ route('delete.category',$item->id) }}" class="btn btn-soft-danger btn-icon btn-sm rounded-circle" id="delete"> <i class="ti ti-trash"></i></a>
-                </div>
+        <form action="{{ route('subscription.status.update',$item->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+        <button type="submit" class="btn btn-success btn-sm">Approve</button>
+        </form>
             </td>
         </tr><!-- end table-row -->
          @endforeach 
