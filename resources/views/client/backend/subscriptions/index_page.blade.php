@@ -60,12 +60,12 @@
                     <span class="text-muted">Remaining:</span>
                     <strong class="text-success">{{ auth()->user()->remaining_prompts }}</strong>
                 </div>
-                 @if (auth()->user()->subscription_renewed_at) 
-                    <div class="d-flex justify-content-between">
-                        <span class="text-muted">Renews on:</span>
-                        <strong>{{ auth()->user()->subscription_renewed_at->addMonth()->format('M d, Y') }}</strong>
-                    </div>
-                 @endif
+    @if (auth()->user()->subscription_renewed_at) 
+    <div class="d-flex justify-content-between">
+        <span class="text-muted">Renews on:</span>
+        <strong>{{ \Carbon\Carbon::parse(auth()->user()->subscription_renewed_at)->format('M d, Y') }}</strong>
+    </div>
+    @endif   
                 
             </div>
 

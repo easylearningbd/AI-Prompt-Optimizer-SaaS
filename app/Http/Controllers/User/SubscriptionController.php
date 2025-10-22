@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Subscription;
+use App\Notifications\SubscriptionStatusNotification;
 
 class SubscriptionController extends Controller
 {
@@ -102,6 +103,8 @@ class SubscriptionController extends Controller
             'subscription_renewed_at' => now(),
         ]);
 
+        /// Send Notification 
+        $subscription->user->notify(new SubscriptionStatusNotification($subscription,'approved'));
 
         $notification = array(
             'message' => 'Subscription Approved successfully',
