@@ -79,7 +79,11 @@ class SubscriptionController extends Controller
     }
      // End Method 
 
-
+    public function PendingSubscription(){
+        $pendingsub = Subscription::where('status','pending')->latest()->get();
+        return view('admin.backend.subscription.pending_subscription',compact('pendingsub'));
+    }
+    // End Method 
 
 
 

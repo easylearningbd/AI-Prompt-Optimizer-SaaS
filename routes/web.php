@@ -62,7 +62,11 @@ Route::controller(CategoryController::class)->group(function(){
     Route::get('/delete/category/{id}','DeleteCategory')->name('delete.category');
 });
 
-
+Route::controller(SubscriptionController::class)->group(function(){
+    Route::get('/pending/subscription','PendingSubscription')->name('pending.subscription'); 
+   
+    
+});
 
 
 
