@@ -60,7 +60,7 @@
                         </a>
                     </li>
                     <li class="side-nav-item">
-                        <a href="apps-invoice-details.html" class="side-nav-link">
+                        <a href="{{ route('approved.subscription') }}" class="side-nav-link">
                             <span class="menu-text">Approved Subscription</span>
                         </a>
                     </li> 

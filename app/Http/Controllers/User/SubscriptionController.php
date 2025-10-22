@@ -115,7 +115,11 @@ class SubscriptionController extends Controller
     }
      // End Method 
 
-
+ public function ApprovedSubscription(){
+        $approvesub = Subscription::where('status','approved')->latest()->get();
+        return view('admin.backend.subscription.approved_subscription',compact('approvesub'));
+    }
+    // End Method 
 
 
 
