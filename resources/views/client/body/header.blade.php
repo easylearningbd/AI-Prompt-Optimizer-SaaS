@@ -58,90 +58,75 @@
                         <!-- Language Dropdown -->
                        
 
-                        <!-- Notification Dropdown -->
+   <!-- Notification Dropdown -->
+ @auth 
 <div class="topbar-item">
     <div class="dropdown">
         <button class="topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown"
             data-bs-offset="0,18" type="button" data-bs-auto-close="outside" aria-haspopup="false"
             aria-expanded="false">
             <i class="ri-notification-snooze-line animate-ring fs-22"></i>
-            <span class="noti-icon-badge"></span>
+        @php
+            $unreadCount = auth()->user()->unreadNotifications()->count();
+        @endphp
+        @if ($unreadCount > 0) 
+          <span class="noti-icon-badge badge bg-danger"> {{ $unreadCount }}</span>
+        @endif
         </button>
 
         <div class="dropdown-menu p-0 dropdown-menu-end dropdown-menu-lg" style="min-height: 300px;">
             <div class="p-2 border-bottom position-relative border-dashed">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h6 class="m-0 fs-16 fw-semibold"> Notifications</h6>
+                        <h6 class="m-0 fs-16 fw-semibold"> Notifications
+           @if ($unreadCount > 0) 
+          <span class="noti-icon-badge badge bg-danger"> {{ $unreadCount }}</span>
+          @endif 
+         </h6>
                     </div>
-                    <div class="col-auto">
-                        <div class="dropdown">
-                            <a href="#" class="dropdown-toggle drop-arrow-none link-dark"
-                                data-bs-toggle="dropdown" data-bs-offset="0,15" aria-expanded="false">
-                                <i class="ri-settings-2-line fs-22 align-middle"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">Mark as Read</a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">Delete All</a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">Do not Disturb</a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">Other Settings</a>
-                            </div>
-                        </div>
-                    </div>
+
+
+    <div class="col-auto">
+      @if ($unreadCount > 0)
+       <form action="" method="POST" class="d-inline">
+
+        <button type="submit" class="btn btn-link btn-sm p-0 text-decoration-none text-primary" title="Mark all as read">Mark All</button>
+       </form>
+          
+      @endif
+    </div>
                 </div>
             </div>
 
             <div class="position-relative rounded-0" style="max-height: 300px;" data-simplebar>
+        
+        @php
+            $notifications = auth()->user()->notifications()->take(6)->get();
+        @endphp
+               
                 <!-- item-->
-                <div class="dropdown-item notification-item py-2 text-wrap active" id="notification-1">
-                    <span class="d-flex align-items-center">
-                        <span class="me-3 position-relative flex-shrink-0">
-                            <img src="assets/images/users/avatar-2.jpg" class="avatar-lg rounded-circle"
-                                alt="" />
-                        </span>
-                        <span class="flex-grow-1 text-muted">
-                            <span class="fw-medium text-body">Glady Haid</span> commented on <span
-                                class="fw-medium text-body">Arclon admin status</span>
-                            <br />
-                            <span class="fs-12">25m ago</span>
-                        </span>
-                        <span class="notification-item-close">
-                            <button type="button"
-                                class="btn btn-ghost-danger rounded-circle btn-sm btn-icon"
-                                data-dismissible="#notification-1">
-                                <i class="ri-close-line fs-16"></i>
-                            </button>
-                        </span>
-                    </span>
-                </div>
-
-                <!-- item-->
-                <div class="dropdown-item notification-item py-2 text-wrap" id="notification-2">
-                    <span class="d-flex align-items-center">
-                        <span class="me-3 position-relative flex-shrink-0">
-                            <img src="assets/images/users/avatar-4.jpg" class="avatar-lg rounded-circle"
-                                alt="" />
-                        </span>
-                        <span class="flex-grow-1 text-muted">
-                            <span class="fw-medium text-body">Tommy Berry</span> donated <span
-                                class="text-success">$100.00</span> for <span
-                                class="fw-medium text-body">Carbon removal program</span>
-                            <br />
-                            <span class="fs-12">58m ago</span>
-                        </span>
-                        <span class="notification-item-close">
-                            <button type="button"
-                                class="btn btn-ghost-danger rounded-circle btn-sm btn-icon"
-                                data-dismissible="#notification-2">
-                                <i class="ri-close-line fs-16"></i>
-                            </button>
-                        </span>
-                    </span>
-                </div>
+        <div class="dropdown-item notification-item py-2 text-wrap active" id="notification-1">
+            <span class="d-flex align-items-center">
+                <span class="me-3 position-relative flex-shrink-0">
+                    <img src="assets/images/users/avatar-2.jpg" class="avatar-lg rounded-circle"
+                        alt="" />
+                </span>
+                <span class="flex-grow-1 text-muted">
+                    <span class="fw-medium text-body">Glady Haid</span> commented on <span
+                        class="fw-medium text-body">Arclon admin status</span>
+                    <br />
+                    <span class="fs-12">25m ago</span>
+                </span>
+                <span class="notification-item-close">
+                    <button type="button"
+                        class="btn btn-ghost-danger rounded-circle btn-sm btn-icon"
+                        data-dismissible="#notification-1">
+                        <i class="ri-close-line fs-16"></i>
+                    </button>
+                </span>
+            </span>
+        </div>
+ 
  
             </div>
 
@@ -153,6 +138,11 @@
         </div>
     </div>
 </div>
+ @endauth  
+
+
+
+
 
                         <!-- Apps Dropdown -->
                        
