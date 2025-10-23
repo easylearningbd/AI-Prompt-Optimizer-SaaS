@@ -15,5 +15,13 @@ class NotificationController extends Controller
     }
     // End Method 
 
+    public function NotificationsDelete($id){
+
+        $notification = auth()->user()->notifications()->findOrFail($id);
+        $notification->delete();
+        return back()->with('success','Notification deleted');
+    }
+    // End Method 
+
 
 } 

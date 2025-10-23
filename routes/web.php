@@ -107,6 +107,7 @@ Route::controller(SubscriptionController::class)->group(function(){
 
 Route::controller(NotificationController::class)->group(function(){
     Route::post('/notifications/{id}/read','MarkAsRead')->name('notifications.mark-read'); 
+    Route::delete('/notifications/{id}','NotificationsDelete')->name('notifications.delete');
     
 }); 
  

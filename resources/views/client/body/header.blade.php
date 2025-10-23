@@ -120,7 +120,7 @@
              <span class="fs-12">{{ $notification->created_at->diffForHumans() }}</span>
                 </span>
                 <span class="notification-item-close">
-                <form action="" method="POST" class="d-inline">
+                <form action="{{ route('notifications.delete',$notification->id) }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE') 
                     <button type="submit" onclick="return confirm('Delete this notifications?')"
