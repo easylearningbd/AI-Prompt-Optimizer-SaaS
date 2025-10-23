@@ -105,36 +105,60 @@
         @endphp
                
                 <!-- item-->
-        <div class="dropdown-item notification-item py-2 text-wrap active" id="notification-1">
-            <span class="d-flex align-items-center">
-                <span class="me-3 position-relative flex-shrink-0">
-                    <img src="assets/images/users/avatar-2.jpg" class="avatar-lg rounded-circle"
-                        alt="" />
-                </span>
+        @forelse ($notifications as $notification) 
+        <div class="dropdown-item notification-item py-2 text-wrap {{ $notification->read_at ? '' : 'active' }}" id="notification-1">
+            <span class="d-flex align-items-center">  
                 <span class="flex-grow-1 text-muted">
-                    <span class="fw-medium text-body">Glady Haid</span> commented on <span
-                        class="fw-medium text-body">Arclon admin status</span>
-                    <br />
-                    <span class="fs-12">25m ago</span>
+        <span class="fw-medium text-body">Your Plan {{ $notification->data['plan'] ?? 'Subscription' }} Updated </span> 
+        <p class="text-muted mb-1 user-msg">
+            <small>
+                Status: <span class="badge badge-soft-{{ $notification->data['status'] === 'approved' ? 'success' : ($notification->data['status'] === 'rejected' ? 'danger' : 'warning')}} ">
+                {{ ucfirst($notification->data['status'] ?? 'Updated' ) }}
+                </span>
+            </small>
+            </p>  
+             <span class="fs-12">{{ $notification->created_at->diffForHumans() }}</span>
                 </span>
                 <span class="notification-item-close">
-                    <button type="button"
+                <form action="" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE') 
+                    <button type="submit" onclick="return confirm('Delete this notifications?')"
                         class="btn btn-ghost-danger rounded-circle btn-sm btn-icon"
                         data-dismissible="#notification-1">
                         <i class="ri-close-line fs-16"></i>
                     </button>
+                    </form>
+
                 </span>
             </span>
         </div>
+
+        @empty
+        <div class="text-center py-5">
+            <div class="avatar-lg mx-auto mb-3">
+                <div class="avatar-title bg-soft-primary text-primary rounded-circle">
+                  <i class="ri-notification-off-line" style="font-size: 36px;"></i>
+                </div>
+                <h5 class="fs-16">No Notifications</h5>
+                <p class="text-muted mb-0">You are all caugth up!</p>
+            </div>
+
+        </div>
+            
+        @endforelse
  
  
             </div>
 
             <!-- All-->
+        @if ($notifications->count() > 0) 
             <a href="javascript:void(0);"
                 class="dropdown-item notification-item text-center text-reset text-decoration-underline fw-bold notify-item border-top border-light py-2">
                 View All
             </a>
+        @endif  
+
         </div>
     </div>
 </div>
