@@ -106,7 +106,7 @@
                
                 <!-- item-->
         @forelse ($notifications as $notification) 
-        <div class="dropdown-item notification-item py-2 text-wrap {{ $notification->read_at ? '' : 'active' }}" id="notification-1">
+        <div class="dropdown-item notification-item py-2 text-wrap {{ $notification->read_at ? '' : 'active' }}" onclick="markAsRead('{{ $notification->id }}')" >
             <span class="d-flex align-items-center">  
                 <span class="flex-grow-1 text-muted">
         <span class="fw-medium text-body">Your Plan {{ $notification->data['plan'] ?? 'Subscription' }} Updated </span> 
@@ -250,3 +250,26 @@
                     </div>
                 </div>
             </header>
+<script>
+    // Mark notification as read 
+    function markAsRead(notificationId){
+        fetch(`/notifications/${notificationId}/read`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    }
+</script>

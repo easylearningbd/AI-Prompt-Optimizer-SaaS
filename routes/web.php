@@ -8,7 +8,8 @@ use App\Http\Middleware\IsUser;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\PromptController;
-use App\Http\Controllers\User\SubscriptionController;
+use App\Http\Controllers\User\SubscriptionController; 
+use App\Http\Controllers\User\NotificationController; 
 
 Route::get('/', function () {
     return view('welcome');
@@ -101,12 +102,14 @@ Route::controller(SubscriptionController::class)->group(function(){
     Route::get('/subscriptions/create','SubscriptionsCreate')->name('subscriptions.create');
     Route::post('/subscriptions/store','SubscriptionsStore')->name('subscriptions.store');
     
-});
+}); 
 
 
-
-
-
+Route::controller(NotificationController::class)->group(function(){
+    Route::post('/notifications/{id}/read','MarkAsRead')->name('notifications.mark-read'); 
+    
+}); 
+ 
 
 
 });
