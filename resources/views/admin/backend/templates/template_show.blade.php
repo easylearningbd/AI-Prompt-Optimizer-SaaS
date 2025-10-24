@@ -141,30 +141,32 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <small class="text-muted">Usage Count</small>
-                        <h4>usage_count</h4>
+                        <h4>{{ number_format($template->usage_count) }}</h4>
                     </div>
                     <div class="mb-3">
                         <small class="text-muted">User Variations</small>
-                        <h4>variations</h4>
+                        <h4>{{ number_format($template->variations->count()) }}</h4>
                     </div>
                     <div class="mb-3">
                         <small class="text-muted">Status</small>
                         <div>
-                            <span class="badge bg-success">
-                                
+                            <span class="badge bg-{{ $template->is_active ? 'success' : 'secondary' }}">
+                                {{ $template->is_active ? 'Active' : 'Inactive' }}
                             </span>
-                           
-                                <span class="badge bg-warning">Featured</span>
+                            @if ($template->is_featured)
+                             <span class="badge bg-warning">Featured</span>
+                            @endif
+                                
                             
                         </div>
                     </div>
                     <div class="mb-3">
                         <small class="text-muted">Created</small>
-                        <div>created_at</div>
+                        <div>{{ $template->created_at->format('M d, Y h:i A') }}</div>
                     </div>
                     <div>
                         <small class="text-muted">Last Updated</small>
-                        <div>updated_at</div>
+                        <div>{{ $template->updated_at->format('M d, Y h:i A') }}</div>
                     </div>
                 </div>
             </div>
@@ -179,21 +181,23 @@
                             <i class="ri-edit-line"></i> Edit Template
                         </a>
                         
-                        <form action=" " method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-warning w-100">
-                                <i class="ri-star-fill"></i>
-                              Remove from Featured
-                            </button>
-                        </form>
+<form action=" " method="POST">
+    @csrf
+    <button type="submit" class="btn btn-{{$template->is_featured ? 'outline-warning' : 'warning'}}  w-100">
+        
+        <i class="ri-star-{{ $template->is_featured ? 'fill' : 'line'}}"></i>
 
-                        <form action=" " method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-success w-100">
-                                <i class="ri-check-line"></i>
-                              Activate
-                            </button>
-                        </form>
+        {{ $template->is_featured ? 'Remove from Featured' : 'Mark as Featured'}}    
+    </button>
+</form>
+
+        <form action=" " method="POST">
+            @csrf
+            <button type="submit" class="btn btn-{{ $template->is_active ? 'outline-success' : 'success'}}  w-100">
+                <i class="ri-{{ $template->is_active ? 'close' : 'check' }}-line"></i>
+                {{ $template->is_active ? 'Deactive' : 'Active'}}    
+            </button>
+        </form>
 
                         <hr>
 
