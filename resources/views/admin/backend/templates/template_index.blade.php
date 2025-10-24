@@ -147,22 +147,22 @@
         <td>
 <form action=" " method="POST" class="d-inline">
     @csrf
-    <button type="submit" class="btn btn-sm btn-success">
-        <i class="ri- -line"></i>
-      Active
+    <button type="submit" class="btn btn-sm btn-{{ $template->is_active ? 'success' : 'secondary' }} ">
+        <i class="ri-{{ $template->is_active ? 'check' : 'close' }}-line"></i>
+      Active  
     </button>
     </form>
         </td>
         <td>
     <form action=" " method="POST" class="d-inline">
         @csrf
-        <button type="submit" class="btn btn-sm btn-warning" title="Toggle Featured">
-            <i class="ri-star-fill"></i>
+        <button type="submit" class="btn btn-sm btn-{{ $template->is_featured ? 'warning' : 'outline-warning' }}" title="Toggle Featured">
+            <i class="ri-star-{{$template->is_featured ? 'fill' : 'line'}}"></i>
         </button>
     </form>
                     </td>
                 <td>
-                    <small>created_at</small>
+                    <small>{{ $template->created_at->format('M d, Y') }}</small>
                 </td>
                 <td>
                     <div class="btn-group" role="group">
@@ -194,7 +194,7 @@
 
                         <!-- Pagination -->
                         <div class="mt-3">
-                           Pagination
+                          {{ $templates->links() }}
                         </div>
 @else 
     <div class="text-center py-5">
