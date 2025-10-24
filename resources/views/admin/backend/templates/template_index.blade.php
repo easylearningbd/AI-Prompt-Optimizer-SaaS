@@ -99,8 +99,9 @@
                     <h5 class="card-title mb-0">All Templates</h5>
                 </div>
                 <div class="card-body">
-                   
-                        <div class="table-responsive">
+  
+@if ($templates->count() > 0) 
+ <div class="table-responsive">
 <table class="table table-hover align-middle mb-0">
 <thead class="table-light">
 <tr>
@@ -116,32 +117,32 @@
 </tr>
 </thead>
 <tbody>
-
+@foreach ($templates as $template)
     <tr>
-        <td><strong>#1</strong></td>
+        <td><strong>#{{ $template->id }}</strong></td>
         <td>
             <div class="d-flex align-items-center">
-              
-                    <i class="fs-20 text-primary me-2"></i>
-              
+                @if ($template->icon) 
+                    <i class="{{ $template->icon }} fs-20 text-primary me-2"></i>
+               @endif
                 <div>
-                    <strong>name</strong>
+                    <strong>{{ $template->name }}</strong>
                     <br>
-                    <small class="text-muted">description</small>
+                    <small class="text-muted">{{ Str::limit($template->description, 50)  }}</small>
                 </div>
             </div>
         </td>
         <td>
-            <span class="badge bg-primary">category</span>
+            <span class="badge bg-primary">{{ $template->category->name }}</span>
         </td>
         <td>
-            <span class="badge bg-success">
-              difficulty_level
+            <span class="badge bg-{{ $template->difficulty_level === 'beginner' ? 'success' : ($template->difficulty_level === 'intermediate' ? 'warning' : 'danger') }} ">
+             {{ ucfirst($template->difficulty_level) }}
             </span>
         </td>
         <td>
             <i class="ri-download-line text-muted"></i>
-           usage_count
+          {{ number_format($template->usage_count) }}
         </td>
         <td>
 <form action=" " method="POST" class="d-inline">
@@ -150,16 +151,16 @@
         <i class="ri- -line"></i>
       Active
     </button>
-</form>
-    </td>
-    <td>
-<form action=" " method="POST" class="d-inline">
-    @csrf
-    <button type="submit" class="btn btn-sm btn-warning" title="Toggle Featured">
-        <i class="ri-star-fill"></i>
-    </button>
-</form>
-                </td>
+    </form>
+        </td>
+        <td>
+    <form action=" " method="POST" class="d-inline">
+        @csrf
+        <button type="submit" class="btn btn-sm btn-warning" title="Toggle Featured">
+            <i class="ri-star-fill"></i>
+        </button>
+    </form>
+                    </td>
                 <td>
                     <small>created_at</small>
                 </td>
@@ -182,6 +183,10 @@
                     </div>
                 </td>
             </tr>
+             
+@endforeach
+
+
         
     </tbody>
 </table>
@@ -191,16 +196,16 @@
                         <div class="mt-3">
                            Pagination
                         </div>
-                   
-                        <div class="text-center py-5">
-                            <i class="ri-file-list-3-line display-1 text-muted"></i>
-                            <h5 class="mt-3">No Templates Found</h5>
-                            <p class="text-muted">Create your first template to get started.</p>
-                            <a href=" " class="btn btn-primary mt-3">
-                                <i class="ri-add-line"></i> Create Template
-                            </a>
-                        </div>
-                   
+@else 
+    <div class="text-center py-5">
+        <i class="ri-file-list-3-line display-1 text-muted"></i>
+        <h5 class="mt-3">No Templates Found</h5>
+        <p class="text-muted">Create your first template to get started.</p>
+        <a href=" " class="btn btn-primary mt-3">
+            <i class="ri-add-line"></i> Create Template
+        </a>
+    </div>
+@endif   
                 </div>
             </div>
         </div>
