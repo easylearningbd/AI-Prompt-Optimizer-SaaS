@@ -165,22 +165,22 @@
                     <small>{{ $template->created_at->format('M d, Y') }}</small>
                 </td>
                 <td>
-                    <div class="btn-group" role="group">
-                            <a href=" " class="btn btn-sm btn-warning" title="Show">
-                            <i class="ri-eye-line"></i>
-                        </a>
+    <div class="btn-group" role="group">
+            <a href="{{ route('admin.templates.show',$template) }} " class="btn btn-sm btn-warning" title="Show">
+            <i class="ri-eye-line"></i>
+        </a>
 
-                        <a href=" " class="btn btn-sm btn-primary" title="Edit">
-                            <i class="ri-edit-line"></i>
-                        </a>
-                        <form action=" " method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this template?')" title="Delete">
-                                <i class="ri-delete-bin-line"></i>
-                            </button>
-                        </form>
-                    </div>
+        <a href=" " class="btn btn-sm btn-primary" title="Edit">
+            <i class="ri-edit-line"></i>
+        </a>
+        <form action=" " method="POST" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this template?')" title="Delete">
+                <i class="ri-delete-bin-line"></i>
+            </button>
+        </form>
+    </div>
                 </td>
             </tr>
              

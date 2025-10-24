@@ -74,6 +74,7 @@ Route::controller(SubscriptionController::class)->group(function(){
 
 Route::controller(AdminTemplateController::class)->group(function(){
     Route::get('/admin/templates/index','AdminTemplatesIndex')->name('admin.templates.index'); 
+    Route::get('/admin/templates/show/{template}','AdminTemplatesShow')->name('admin.templates.show');
     
     
 });

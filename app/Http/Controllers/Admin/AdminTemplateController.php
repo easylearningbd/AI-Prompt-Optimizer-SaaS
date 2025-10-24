@@ -20,6 +20,13 @@ class AdminTemplateController extends Controller
     }
     // End Method 
 
+    public function AdminTemplatesShow(PromptTemplate $template){
+        
+        $template->load(['category','variations']);
+        return view('admin.backend.templates.template_show',compact('template'));
+    }
+    // End Method 
+
 
 
 }
