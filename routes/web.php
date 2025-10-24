@@ -10,6 +10,7 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\PromptController;
 use App\Http\Controllers\User\SubscriptionController; 
 use App\Http\Controllers\User\NotificationController; 
+use App\Http\Controllers\Admin\AdminTemplateController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -67,6 +68,13 @@ Route::controller(SubscriptionController::class)->group(function(){
     Route::get('/pending/subscription','PendingSubscription')->name('pending.subscription'); 
     Route::put('/subscription/status/update/{subscription}','SubscriptionStatusUpdate')->name('subscription.status.update');
    Route::get('/approved/subscription','ApprovedSubscription')->name('approved.subscription');
+    
+});
+
+
+Route::controller(AdminTemplateController::class)->group(function(){
+    Route::get('/admin/templates/index','AdminTemplatesIndex')->name('admin.templates.index'); 
+    
     
 });
 

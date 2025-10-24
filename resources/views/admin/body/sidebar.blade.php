@@ -38,6 +38,13 @@
                 <span class="badge bg-danger rounded-pill">9+</span>
             </a>
         </li>
+
+         <li class="side-nav-item">
+            <a href="{{ route('admin.templates.index') }}" class="side-nav-link">
+                <span class="menu-icon"><i class="ti ti-mailbox"></i></span>
+                <span class="menu-text"> Prompt Libary  </span>
+            </a>
+        </li>
  
         <li class="side-nav-item">
             <a href="{{ route('all.category') }}" class="side-nav-link">
