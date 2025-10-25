@@ -170,7 +170,7 @@
             <i class="ri-eye-line"></i>
         </a>
 
-        <a href=" " class="btn btn-sm btn-primary" title="Edit">
+        <a href="{{ route('admin.templates.edit',$template) }}" class="btn btn-sm btn-primary" title="Edit">
             <i class="ri-edit-line"></i>
         </a>
         <form action=" " method="POST" class="d-inline">

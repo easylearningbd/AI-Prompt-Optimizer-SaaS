@@ -10,7 +10,7 @@
             <div class="page-title-box d-flex align-items-center justify-content-between">
                 <h4 class="mb-0">Template Details: {{ $template->name }}</h4>
                 <div class="page-title-right">
-                    <a href="  " class="btn btn-warning me-2">
+                    <a href="{{ route('admin.templates.edit',$template) }}" class="btn btn-warning me-2">
                         <i class="ri-edit-line"></i> Edit
                     </a>
                     <a href="{{ route('admin.templates.index') }} " class="btn btn-secondary">
@@ -177,7 +177,7 @@
                 </div>
                 <div class="card-body">
                     <div class="d-grid gap-2">
-                        <a href=" " class="btn btn-warning">
+                        <a href="{{ route('admin.templates.edit',$template) }}" class="btn btn-warning">
                             <i class="ri-edit-line"></i> Edit Template
                         </a>
                         

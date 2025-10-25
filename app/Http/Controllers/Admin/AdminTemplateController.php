@@ -27,6 +27,14 @@ class AdminTemplateController extends Controller
     }
     // End Method 
 
+    public function AdminTemplatesEdit(PromptTemplate $template){
+
+        $categories = Category::active()->get();
+         return view('admin.backend.templates.template_edit',compact('categories','template'));
+
+    }
+    // End Method 
+
 
 
 }
