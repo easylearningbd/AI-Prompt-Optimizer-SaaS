@@ -109,40 +109,47 @@
         Placeholders <span class="text-danger">*</span>
     </label>
     <div id="placeholders-container">
+        @php
+            $placeholders = $template->placeholders ?? [];
+        @endphp
         
-            
-            <div class="placeholder-item border rounded p-3 mb-2">
-                <div class="row g-2">
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="placeholders" placeholder="Key" value=" " required>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="placeholders " placeholder="Label" value=" " required>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="form-select" name="placeholders ">
-                            <option value="text" >Text</option>
-                            <option value="textarea"  >Textarea</option>
-                            <option value="select"  >Select</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="placeholders " placeholder="Placeholder" value=" ">
-                    </div>
-                    <div class="col-md-1">
-                        
-                            <button type="button" class="btn btn-sm btn-danger remove-placeholder">
-                                <i class="ri-delete-bin-line"></i>
-                            </button>
-                            
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="placeholders " value="1"  >
-                                <label class="form-check-label small">Req</label>
-                            </div>
-                        
-                    </div>
-                </div>
+    @foreach ($placeholders as $index => $placeholder ) 
+    <div class="placeholder-item border rounded p-3 mb-2">
+        <div class="row g-2">
+            <div class="col-md-3">
+                <input type="text" class="form-control" name="placeholders[{{ $index }}][key]" placeholder="Key" value="{{ $placeholder['key'] ?? '' }}" required>
             </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" name="placeholders[{{ $index }}][label]" placeholder="Label" value="{{ $placeholder['label'] ?? '' }}" required>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" name="placeholders ">
+                    <option value="text" {{ ($placeholder['type'] ?? 'text') === 'text' ? 'selected' : '' }} >Text</option>
+                    <option value="textarea" {{ ($placeholder['type'] ?? 'textarea') === 'textarea' ? 'selected' : '' }} >Textarea</option>
+                    <option value="select" {{ ($placeholder['type'] ?? '') === 'select' ? 'selected' : '' }} >Select</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" name="placeholders[{{ $index }}][placeholder]" placeholder="Placeholder" value="{{ $placeholder['placeholder'] ?? '' }}">
+            </div>
+            <div class="col-md-1">
+                @if ($index > 0) 
+                    <button type="button" class="btn btn-sm btn-danger remove-placeholder">
+                        <i class="ri-delete-bin-line"></i>
+                    </button>
+                @else     
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="placeholders[{{ $index }}][required]" value="1" {{ ($placeholder['required'] ?? true) ? 'checked' : ''}}  >
+                        <label class="form-check-label small">Req</label>
+                    </div>
+               @endif
+                
+            </div>
+        </div>
+    </div>
+    @endforeach
+
+
         
     </div>
     <button type="button" class="btn btn-sm btn-outline-primary" id="add-placeholder">

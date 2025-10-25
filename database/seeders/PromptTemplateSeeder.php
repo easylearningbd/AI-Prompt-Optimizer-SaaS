@@ -72,7 +72,7 @@ class PromptTemplateSeeder extends Seeder
                 'category' => 'YouTube script',
                 'description' => 'Create structured YouTube video scripts with intro, body, and outro.',
                 'template_content' => 'Create a {duration} minute YouTube video script about {topic} for {audience}. Include an attention-grabbing intro, {main_points} main points in the body, and a strong call-to-action outro. Tone should be {tone}.',
-                'placeholders' => [
+                'placeholders' => [ 
                     ['key' => 'duration', 'label' => 'Video Duration', 'type' => 'text', 'placeholder' => 'e.g., 10', 'required' => true],
                     ['key' => 'topic', 'label' => 'Video Topic', 'type' => 'text', 'placeholder' => 'Main topic', 'required' => true],
                     ['key' => 'audience', 'label' => 'Target Audience', 'type' => 'text', 'placeholder' => 'Who is watching?', 'required' => true],
