@@ -123,7 +123,7 @@
                 <input type="text" class="form-control" name="placeholders[{{ $index }}][label]" placeholder="Label" value="{{ $placeholder['label'] ?? '' }}" required>
             </div>
             <div class="col-md-2">
-                <select class="form-select" name="placeholders ">
+                <select class="form-select" name="placeholders[{{ $index }}][type]">
                     <option value="text" {{ ($placeholder['type'] ?? 'text') === 'text' ? 'selected' : '' }} >Text</option>
                     <option value="textarea" {{ ($placeholder['type'] ?? 'textarea') === 'textarea' ? 'selected' : '' }} >Textarea</option>
                     <option value="select" {{ ($placeholder['type'] ?? '') === 'select' ? 'selected' : '' }} >Select</option>
@@ -318,6 +318,53 @@
         </form>
     </div>
 </div>
+
+<script>
+    let placeholderCount = {{ count($placeholders) }};
+
+document.getElementById('add-placeholder').addEventListener('click', function() {
+    const container = document.getElementById('placeholders-container');
+    const newPlaceholder = `
+    <div class="placeholder-item border rounded p-3 mb-2">
+        <div class="row g-2">
+            <div class="col-md-3">
+                <input type="text" class="form-control" name="placeholders[${placeholderCount}][key]" placeholder="Key" required>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" name="placeholders[${placeholderCount}][label]" placeholder="Label" required>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" name="placeholders[${placeholderCount}][type]">
+                    <option value="text" >Text</option>
+                    <option value="textarea" >Textarea</option>
+                    <option value="select" >Select</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" name="placeholders[${placeholderCount}][placeholder]" placeholder="Placeholder">
+            </div>
+            <div class="col-md-1"> 
+                    <button type="button" class="btn btn-sm btn-danger remove-placeholder">
+                        <i class="ri-delete-bin-line"></i>
+                    </button> 
+            </div>
+        </div>
+    </div> 
+    `;
+    container.insertAdjacentHTML('beforeend',newPlaceholder);
+    placeholderCount++;
+
+});
+
+/// Remove Placeholder 
+document.getElementById('placeholders-container').addEventListener('click', function(e){
+if (e.target.closest('.remove-placeholder')) {
+    e.target.closest('.placeholder-item').remove();
+}
+}); 
+
+
+</script>
 
  
 @endsection
