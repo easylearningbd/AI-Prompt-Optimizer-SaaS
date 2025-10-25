@@ -81,6 +81,7 @@ Route::controller(AdminTemplateController::class)->group(function(){
     Route::delete('/admin/templates/delete/{template}','AdminTemplatesDelete')->name('admin.templates.delete');
 
     Route::post('/admin/templates/status/update/{template}','AdminTemplatesUpdateStatus')->name('admin.templates.status.update');
+    Route::post('/admin/templates/featured/update/{template}','AdminTemplatesUpdateFeatured')->name('admin.templates.featured.update');
     
     
 });

@@ -154,7 +154,7 @@
     </form>
         </td>
         <td>
-    <form action=" " method="POST" class="d-inline">
+    <form action="{{ route('admin.templates.featured.update',$template) }}" method="POST" class="d-inline">
         @csrf
         <button type="submit" class="btn btn-sm btn-{{ $template->is_featured ? 'warning' : 'outline-warning' }}" title="Toggle Featured">
             <i class="ri-star-{{$template->is_featured ? 'fill' : 'line'}}"></i>

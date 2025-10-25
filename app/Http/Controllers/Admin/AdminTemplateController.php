@@ -116,5 +116,21 @@ class AdminTemplateController extends Controller
        // End Method 
 
 
+       public function AdminTemplatesUpdateFeatured(PromptTemplate $template){
+
+        $template->update([
+            'is_featured' => !$template->is_featured
+        ]);
+
+       $notification = array(
+            'message' => 'Template Featured Updated Successfully',
+            'alert-type' => 'success'
+        ); 
+        return redirect()->back()->with($notification); 
+
+      }
+       // End Method 
+
+
 
 }
