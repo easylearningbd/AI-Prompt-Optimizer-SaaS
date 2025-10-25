@@ -100,6 +100,21 @@ class AdminTemplateController extends Controller
      }
       // End Method 
 
+      public function AdminTemplatesUpdateStatus(PromptTemplate $template){
+
+        $template->update([
+            'is_active' => !$template->is_active
+        ]);
+
+       $notification = array(
+            'message' => 'Template Status Updated Successfully',
+            'alert-type' => 'success'
+        ); 
+        return redirect()->back()->with($notification); 
+
+      }
+       // End Method 
+
 
 
 }

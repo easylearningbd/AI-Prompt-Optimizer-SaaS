@@ -145,11 +145,11 @@
           {{ number_format($template->usage_count) }}
         </td>
         <td>
-<form action=" " method="POST" class="d-inline">
+<form action="{{ route('admin.templates.status.update',$template) }}" method="POST" class="d-inline">
     @csrf
     <button type="submit" class="btn btn-sm btn-{{ $template->is_active ? 'success' : 'secondary' }} ">
         <i class="ri-{{ $template->is_active ? 'check' : 'close' }}-line"></i>
-      Active  
+      {{ $template->is_active ? 'Active' : 'Inactive' }}    
     </button>
     </form>
         </td>
