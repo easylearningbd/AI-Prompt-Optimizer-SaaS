@@ -85,6 +85,21 @@ class AdminTemplateController extends Controller
     }
      // End Method 
 
+     public function AdminTemplatesDelete(PromptTemplate $template){
+
+        /// Check if template has variations 
+        $variationsCount = $template->variations()->count();
+
+        if ($variationsCount > 0) {
+            return back()->where('error','Cannot delete template. Is has {$variationsCount} by other user variations.');
+        }
+
+        $template->delete();
+
+        return redirect()->route('admin.templates.index')->with('success','Template deleted successfully');
+     }
+      // End Method 
+
 
 
 }

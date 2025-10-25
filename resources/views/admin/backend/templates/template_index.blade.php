@@ -173,7 +173,7 @@
         <a href="{{ route('admin.templates.edit',$template) }}" class="btn btn-sm btn-primary" title="Edit">
             <i class="ri-edit-line"></i>
         </a>
-        <form action=" " method="POST" class="d-inline">
+        <form action="{{ route('admin.templates.delete',$template) }}" method="POST" class="d-inline">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this template?')" title="Delete">

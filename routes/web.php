@@ -78,6 +78,7 @@ Route::controller(AdminTemplateController::class)->group(function(){
     Route::get('/admin/templates/edit/{template}','AdminTemplatesEdit')->name('admin.templates.edit');
 
     Route::put('/admin/templates/update/{template}','AdminTemplatesUpdate')->name('admin.templates.update');
+    Route::delete('/admin/templates/delete/{template}','AdminTemplatesDelete')->name('admin.templates.delete');
     
     
 });

@@ -309,7 +309,7 @@
         <p class="small text-muted mb-3">
             Deleting this template will remove all user variations associated with it.
         </p>
-        <form action=" " method="POST" onsubmit="return confirm('Are you sure? This action cannot be undone!')">
+        <form action="{{ route('admin.templates.delete',$template) }}" method="POST" onsubmit="return confirm('Are you sure? This action cannot be undone!')">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger w-100">
