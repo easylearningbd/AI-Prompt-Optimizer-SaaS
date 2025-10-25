@@ -35,6 +35,36 @@ class AdminTemplateController extends Controller
     }
     // End Method 
 
+    public function AdminTemplatesUpdate(Request $request , PromptTemplate $template){
+
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
+            'template_content' => 'required|string',
+            'placeholders' => 'required|array|min:1',
+            'placeholders.*.key' => 'required|string',
+            'placeholders.*.label' => 'required|string',
+            'placeholders.*.type' => 'required|in:text,textarea,select',
+            'placeholders.*.placeholder' => 'nullable|string',
+            'placeholders.*.required' => 'nullable|boolean',
+
+            'example_output' => 'nullable|string',
+            'difficulty_level' => 'required|in:beginner,intermediate,advanced',
+            'icon' => 'nullable|string',
+            'order' => 'nullable|integer',
+            'is_active' => 'nullable|boolean',
+            'is_featured' => 'nullable|boolean', 
+        ]);
+        
+        $validated['slug'] = Str::slug($validated['name']);
+
+        //// 
+
+
+    }
+     // End Method 
+
 
 
 }

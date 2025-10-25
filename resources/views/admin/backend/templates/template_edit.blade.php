@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <form action=" " method="POST" id="templateForm">
+    <form action="{{ route('admin.templates.update',$template) }} " method="POST" id="templateForm">
         @csrf
         @method('PUT')
         <div class="row">

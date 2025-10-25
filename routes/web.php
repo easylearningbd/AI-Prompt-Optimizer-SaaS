@@ -76,6 +76,8 @@ Route::controller(AdminTemplateController::class)->group(function(){
     Route::get('/admin/templates/index','AdminTemplatesIndex')->name('admin.templates.index'); 
     Route::get('/admin/templates/show/{template}','AdminTemplatesShow')->name('admin.templates.show');
     Route::get('/admin/templates/edit/{template}','AdminTemplatesEdit')->name('admin.templates.edit');
+
+    Route::put('/admin/templates/update/{template}','AdminTemplatesUpdate')->name('admin.templates.update');
     
     
 });
