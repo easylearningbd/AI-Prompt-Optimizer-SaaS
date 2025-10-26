@@ -141,5 +141,55 @@ class AdminTemplateController extends Controller
         // End Method 
 
 
+    public function AdminTemplatesStore(Request $request){
+
+    $validated = $request->validate([
+        'name' => 'required|string',
+        'category_id' => 'required|exists:categories,id',
+        'description' => 'nullable|string',
+        'template_content' => 'required|string',
+        'placeholders' => 'required|array|min:1',
+        'placeholders.*.key' => 'required|string',
+        'placeholders.*.label' => 'required|string',
+        'placeholders.*.type' => 'required|in:text,textarea,select',
+        'placeholders.*.placeholder' => 'nullable|string',
+        'placeholders.*.required' => 'nullable|boolean',
+
+        'example_output' => 'nullable|string',
+        'difficulty_level' => 'required|in:beginner,intermediate,advanced',
+        'icon' => 'nullable|string',
+        'order' => 'nullable|integer',
+        'is_active' => 'nullable|boolean',
+        'is_featured' => 'nullable|boolean', 
+    ]);
+    
+    $validated['slug'] = Str::slug($validated['name']);
+
+    //// Ensure boolenas are set correctly 
+    $validated['is_active'] = $request->has('is_active') ? true : false;
+    $validated['is_featured'] = $request->has('is_featured') ? true : false;
+
+    // Process placeholders 
+    $processedPlaceholders = [];
+
+    foreach($validated['placeholders'] as $placeholder){
+        $processedPlaceholders[] = [
+            'key' => $placeholder['key'],
+            'label' => $placeholder['label'],
+            'type' => $placeholder['type'],
+            'placeholder' => $placeholder['placeholder'] ?? '',
+            'required' => isset($placeholder['required'])  ? true : false, 
+        ];
+    }
+    $validated['placeholders'] = $processedPlaceholders;
+
+    // insert data in template table 
+    PromptTemplate::create($validated);
+
+    return redirect()->route('admin.templates.index')->with('success','Tempate Inserted succcessfully');
+ }
+    // End Method 
+
+
 
 }

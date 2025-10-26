@@ -84,6 +84,7 @@ Route::controller(AdminTemplateController::class)->group(function(){
     Route::post('/admin/templates/featured/update/{template}','AdminTemplatesUpdateFeatured')->name('admin.templates.featured.update');
     
     Route::get('/admin/templates/create','AdminTemplatesCreate')->name('admin.templates.create');
+    Route::post('/admin/templates/store','AdminTemplatesStore')->name('admin.templates.store');
     
 });
 

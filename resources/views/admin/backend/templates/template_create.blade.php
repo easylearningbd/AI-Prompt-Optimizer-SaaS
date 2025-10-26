@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <form action=" " method="POST" id="templateForm">
+    <form action="{{ route('admin.templates.store') }}" method="POST" id="templateForm">
         @csrf
 <div class="row">
     <!-- Main Form -->
