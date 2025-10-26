@@ -26,7 +26,7 @@ class PromptTemplate extends Model
             }
         });
     }
-
+ 
 
    public function category(){
         return $this->belongsTo(Category::class);
@@ -35,7 +35,24 @@ class PromptTemplate extends Model
      public function variations(){
         return $this->hasMany(UserTemplateVariation::class, 'template_id');
     }
+  
+    /// Scopes 
+    public function scopeActive($query){
+        return $query->where('is_active',true);
+    }
 
+     public function scopeFeatured($query){
+        return $query->where('is_featured',true)->where('is_active',true);
+    }
+
+     public function scopeDifficulty($query, $level){
+        return $query->where('difficulty_level',$level);
+    }
+
+    // Helper Method 
+    public function incrementUsage(){
+        $this->increment('usage_count');
+    }
 
 
 }

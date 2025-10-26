@@ -4,13 +4,65 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\PromptTemplate;
+use App\Models\Category;
+use App\Services\GrokService;
 
 class TemplateController extends Controller
 {
-    public function TemplatePromptsIndex(){
+    protected $grokService;
+
+    public function __construct(GrokService $grokService){
+        $this->grokService = $grokService; 
+    }
+
+
+    public function TemplatePromptsIndex(Request $request){
+
+        $query = PromptTemplate::active()->with('category');
+
+        // Filter by category 
+        if ($request->filled('category')) {
+            $query->where('category_id',$request->category);
+        }
+
+        // Filter by Difficulty  
+        if ($request->filled('difficulty')) {
+            $query->where('difficulty_level',$request->difficulty);
+        }
+
+        /// Search function 
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search){
+                $q->where('name','like','%{$search}%')
+                    ->orWhere('description','like','%{$search}%');
+            });
+        }
+
+     // Sort 
+     $sort = $request->get('sort','popular');
+     switch ($sort) {
+        case 'popular':
+            $query->orderBy('usage_count','desc');
+            break;
+        case 'newest':
+        $query->latest();
+        break; 
+        default:
+             $query->orderBY('order')->orderBy('created_at','desc');
+     }
+
+     $templates = $query->paginate(12);
+     $categories = Category::active()->get();
+     $featuredTemplates = PromptTemplate::featured()->with('category')->take(3)->get();
+
+     return view('client.backend.templates.index_page',compact('templates','categories','sort','featuredTemplates')); 
 
     }
-    // End Method 
+    // End Method
 
 
 
