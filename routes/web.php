@@ -11,6 +11,7 @@ use App\Http\Controllers\User\PromptController;
 use App\Http\Controllers\User\SubscriptionController; 
 use App\Http\Controllers\User\NotificationController; 
 use App\Http\Controllers\Admin\AdminTemplateController;
+use App\Http\Controllers\User\TemplateController; 
 
 Route::get('/', function () {
     return view('welcome');
@@ -128,6 +129,14 @@ Route::controller(NotificationController::class)->group(function(){
     Route::delete('/notifications/{id}','NotificationsDelete')->name('notifications.delete');
     
 }); 
+
+
+Route::controller(TemplateController::class)->group(function(){
+    Route::get('/template/prompts/index','TemplatePromptsIndex')->name('template.prompts.index'); 
+     
+    
+}); 
+ 
  
 
 
