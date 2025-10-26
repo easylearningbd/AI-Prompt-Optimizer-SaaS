@@ -11,7 +11,7 @@
             <div class="page-title-box d-flex align-items-center justify-content-between">
                 <h4 class="mb-0">Prompt Templates</h4>
                 <div class="page-title-right">
-                    <a href=" " class="btn btn-primary">
+                    <a href="{{ route('admin.templates.create') }}" class="btn btn-primary">
                         <i class="ri-add-line"></i> Create New Template
                     </a>
                 </div>

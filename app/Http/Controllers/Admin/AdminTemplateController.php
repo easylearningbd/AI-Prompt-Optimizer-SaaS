@@ -132,5 +132,14 @@ class AdminTemplateController extends Controller
        // End Method 
 
 
+       public function AdminTemplatesCreate(){
+
+         $categories = Category::active()->get();
+         return view('admin.backend.templates.template_create',compact('categories'));
+
+       }
+        // End Method 
+
+
 
 }

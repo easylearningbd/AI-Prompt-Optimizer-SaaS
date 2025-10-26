@@ -83,6 +83,7 @@ Route::controller(AdminTemplateController::class)->group(function(){
     Route::post('/admin/templates/status/update/{template}','AdminTemplatesUpdateStatus')->name('admin.templates.status.update');
     Route::post('/admin/templates/featured/update/{template}','AdminTemplatesUpdateFeatured')->name('admin.templates.featured.update');
     
+    Route::get('/admin/templates/create','AdminTemplatesCreate')->name('admin.templates.create');
     
 });
 
