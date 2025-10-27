@@ -113,7 +113,7 @@
                         <!-- CTA Button -->
     <div class="d-grid gap-2">
         @if (auth()->user()->canOptimizePrompt()) 
-            <a href=" " class="btn btn-primary btn-lg">
+            <a href="{{ route('template.prompts.use',$template) }}" class="btn btn-primary btn-lg">
                 <i class="ri-edit-box-line"></i> Use This Template
             </a>
         @else 

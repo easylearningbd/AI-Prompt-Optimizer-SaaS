@@ -80,6 +80,17 @@ class TemplateController extends Controller
     }
      // End Method
 
+    public function TemplatePromptsUse(PromptTemplate $template){
+
+        // Check subscription limits 
+        if (!auth()->user()->canOptimizePrompt() && !auth()->user()->isAdmin()) {
+            return redirect()->route('template.prompts.show',$template)->with('error','You have reached your montly prompt limit. Please upgrade your plan');
+        }
+
+        $template->load('category');
+        return view('client.backend.templates.use_page',compact('template'));
+    }
+     // End Method
 
 
 
