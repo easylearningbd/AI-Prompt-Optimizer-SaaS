@@ -141,77 +141,81 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
                             <span class="text-muted">Category:</span>
-                            <strong>category</strong>
+                            <strong>{{ $template->category->name }}</strong>
                         </div>
                         <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
                             <span class="text-muted">Difficulty:</span>
-                            <strong>difficulty_level</strong>
+                            <strong>{{ ucfirst($template->difficulty_level)  }}</strong>
                         </div>
                         <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
                             <span class="text-muted">Fields Required:</span>
-                            <strong>placeholders</strong>
+                            <strong>{{ count($template->placeholders) }}</strong>
                         </div>
                         <div class="d-flex justify-content-between">
                             <span class="text-muted">Total Uses:</span>
-                            <strong>usage_count</strong>
+                            <strong>{{ number_format($template->usage_count) }}</strong>
                         </div>
                     </div>
                 </div>
 
                 <!-- Your Plan -->
-               
-                    <div class="card shadow-sm mb-4 border-success">
-                        <div class="card-header bg-white">
-                            <h6 class="mb-0">
-                                <i class="ri-vip-crown-line"></i> Your Plan
-                            </h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center mb-3">
-                                <h3 class="text-success">
-                                   remaining_prompts
-                                </h3>
-                                <p class="text-muted small mb-0">Optimizations Remaining</p>
-                            </div>
-                             
-                                <div class="alert alert-warning p-2 small mb-2">
-                                    <i class="ri-error-warning-line"></i> Running low!
-                                </div>
-                            
-                            <a href=" " class="btn btn-outline-primary btn-sm w-100">
-                                <i class="ri-arrow-up-circle-line"></i> Upgrade Plan
-                            </a>
-                        </div>
-                    </div>
+   @if (!auth()->user()->isAdmin()) 
+    <div class="card shadow-sm mb-4 border-{{ auth()->user()->remaining_prompts > 0 ? 'success' : 'warning' }} ">
+        <div class="card-header bg-white">
+            <h6 class="mb-0">
+                <i class="ri-vip-crown-line"></i> Your Plan
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="text-center mb-3">
+                <h3 class="text-success">
+                    {{ auth()->user()->remaining_prompts }}
+                </h3>
+                <p class="text-muted small mb-0">Optimizations Remaining</p>
+            </div>
+               @if (auth()->user()->remaining_prompts <= 2) 
+                <div class="alert alert-warning p-2 small mb-2">
+                    <i class="ri-error-warning-line"></i> Running low!
+                </div>
+                @endif
+            
+            <a href="{{ route('subscriptions.create') }}" class="btn btn-outline-primary btn-sm w-100">
+                <i class="ri-arrow-up-circle-line"></i> Upgrade Plan
+            </a>
+        </div>
+    </div>
+    @endif       
               
 
                 <!-- Related Templates -->
-               
-                    <div class="card shadow-sm">
-                        <div class="card-header bg-white">
-                            <h6 class="mb-0">
-                                <i class="ri-apps-line"></i> Related Templates
-                            </h6>
-                        </div>
-                        <div class="list-group list-group-flush">
-                           
-                                <a href=" " class="list-group-item list-group-item-action">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ri-file-text-line fs-4 text-primary me-2"></i>
-                                        <div class="flex-grow-1">
-                                            <h6 class="mb-0">name</h6>
-                                            <small class="text-muted">category</small>
-                                        </div>
-                                    </div>
-                                </a>
-                           
-                        </div>
-                        <div class="card-footer bg-white text-center">
-                            <a href=" " class="text-decoration-none">
-                                View All in category
-                            </a>
-                        </div>
+ @if ($relatedTemplates->count() > 0)      
+<div class="card shadow-sm">
+    <div class="card-header bg-white">
+        <h6 class="mb-0">
+            <i class="ri-apps-line"></i> Related Templates
+        </h6>
+    </div>
+    <div class="list-group list-group-flush">
+        @foreach ($relatedTemplates as $related) 
+            <a href="{{ route('template.prompts.show',$related) }}" class="list-group-item list-group-item-action">
+                <div class="d-flex align-items-center">
+                    <i class="ri-file-text-line fs-4 text-primary me-2"></i>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">{{ Str::limit($related->name, 40) }}</h6>
+                        <small class="text-muted">{{ $related->category->name }}</small>
                     </div>
+                </div>
+            </a>
+        @endforeach
+        
+    </div>
+    <div class="card-footer bg-white text-center">
+        <a href=" " class="text-decoration-none">
+            View All in category
+        </a>
+    </div>
+</div>
+ @endif 
                
             </div>
         </div>
