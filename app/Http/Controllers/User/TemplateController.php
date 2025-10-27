@@ -65,6 +65,22 @@ class TemplateController extends Controller
     // End Method
 
 
+    public function TemplatePromptsShow(PromptTemplate $template){
+
+        $template->load('category');
+
+        $relatedTemplates = PromptTemplate::active()
+                ->where('category_id', $template->category_id)
+                ->where('id', '!=', $template->id)
+                ->orderBy('usage_count','desc')
+                ->take(4)
+                ->get(); 
+        return view('client.backend.templates.show_page',compact('template','relatedTemplates'));
+
+    }
+     // End Method
+
+
 
 
 } 

@@ -58,7 +58,7 @@
                     <small class="text-muted">
                         <i class="ri-download-line"></i> {{ number_format($featured->usage_count) }} uses
                     </small>
-                    <a href=" " class="btn btn-sm btn-primary">
+                    <a href="{{ route('template.prompts.show',$featured) }}" class="btn btn-sm btn-primary">
                         View Details <i class="ri-arrow-right-line"></i>
                     </a>
                 </div>
@@ -197,7 +197,7 @@
                 <small class="text-muted">
                     <i class="ri-download-line"></i> {{ number_format($template->usage_count) }} uses
                 </small>
-                <a href=" " class="btn btn-sm btn-primary">
+                <a href="{{ route('template.prompts.show',$template) }}" class="btn btn-sm btn-primary">
                     View Details
                 </a>
             </div>
