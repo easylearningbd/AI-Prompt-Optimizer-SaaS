@@ -73,84 +73,85 @@
         
 
         <!-- Filters -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <form method="GET" action=" " id="filterForm">
-                    <div class="row g-3">
-                        <!-- Search -->
-                        <div class="col-md-4">
-                            <label class="form-label small text-muted">Search Templates</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white">
-                                    <i class="ri-search-line"></i>
-                                </span>
-                                <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    name="search" 
-                                    placeholder="Search by name or description..."
-                                    value="{{ request('search') }}"
-                                >
-                            </div>
-                        </div>
-
-                        <!-- Category Filter -->
-                        <div class="col-md-3">
-                            <label class="form-label small text-muted">Category</label>
-                            <select class="form-select" name="category" onchange="document.getElementById('filterForm').submit()">
-                                <option value="">All Categories</option>
-                                @foreach($categories as $cat)
-                                    <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
-                                        {{ $cat->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Difficulty Filter -->
-                        <div class="col-md-2">
-                            <label class="form-label small text-muted">Difficulty</label>
-                            <select class="form-select" name="difficulty" onchange="document.getElementById('filterForm').submit()">
-                                <option value="">All Levels</option>
-                                <option value="beginner"  >Beginner</option>
-                                <option value="intermediate"  >Intermediate</option>
-                                <option value="advanced"  >Advanced</option>
-                            </select>
-                        </div>
-
-                        <!-- Sort -->
-                        <div class="col-md-3">
-                            <label class="form-label small text-muted">Sort By</label>
-                            <select class="form-select" name="sort" onchange="document.getElementById('filterForm').submit()">
-                                <option value="popular"  >Most Popular</option>
-                                <option value="newest"  >Newest First</option>
-                                <option value="default"  >Default Order</option>
-                            </select>
-                        </div>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form method="GET" action="{{ route('template.prompts.index') }}" id="filterForm">
+            <div class="row g-3">
+                <!-- Search -->
+                <div class="col-md-4">
+                    <label class="form-label small text-muted">Search Templates</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white">
+                            <i class="ri-search-line"></i>
+                        </span>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            name="search" 
+                            placeholder="Search by name or description..."
+                            value="{{ request('search') }}"
+                        >
                     </div>
+                </div>
 
-                    <div class="mt-3">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="ri-filter-line"></i> Apply Filters
-                        </button>
-                      
-                            <a href=" " class="btn btn-outline-secondary">
-                                <i class="ri-close-circle-line"></i> Clear
-                            </a>
-                        
-                    </div>
-                </form>
+                <!-- Category Filter -->
+                <div class="col-md-3">
+                    <label class="form-label small text-muted">Category</label>
+                    <select class="form-select" name="category" onchange="document.getElementById('filterForm').submit()">
+                        <option value="">All Categories</option>
+                        @foreach($categories as $cat)
+                            <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
+                                {{ $cat->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Difficulty Filter -->
+                <div class="col-md-2">
+                    <label class="form-label small text-muted">Difficulty</label>
+                    <select class="form-select" name="difficulty" onchange="document.getElementById('filterForm').submit()">
+                        <option value="">All Levels</option>
+                        <option value="beginner" {{ request('difficulty') === 'beginner' ? 'selected' : '' }} >Beginner</option>
+                        <option value="intermediate" {{ request('difficulty') === 'intermediate' ? 'selected' : '' }} >Intermediate</option>
+                        <option value="advanced" {{ request('difficulty') === 'advanced' ? 'selected' : '' }} >Advanced</option>
+                    </select>
+                </div>
+
+                <!-- Sort -->
+                <div class="col-md-3">
+                    <label class="form-label small text-muted">Sort By</label>
+                    <select class="form-select" name="sort" onchange="document.getElementById('filterForm').submit()">
+                        <option value="popular" {{ $sort === 'popular' ? 'selected' : '' }}  >Most Popular</option>
+                        <option value="newest"  {{ $sort === 'newest' ? 'selected' : '' }}>Newest First</option>
+                        <option value="default" {{ $sort === 'default' ? 'selected' : '' }} >Default Order</option>
+                    </select>
+                </div>
             </div>
-        </div>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">
+                    <i class="ri-filter-line"></i> Apply Filters
+                </button>
+         @if (request()->hasAny(['search','category','difficulty','sort'])) 
+        <a href="{{ route('template.prompts.index') }}" class="btn btn-outline-secondary">
+            <i class="ri-close-circle-line"></i> Clear
+        </a>
+         @endif   
+                
+            </div>
+        </form>
+    </div>
+</div>
 
         <!-- Results Info -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="mb-0">
-               total Found
+               {{ $templates->total() }} {{ Str::plural('Template',$templates->total() ) }} Found
             </h5>
-           
-                <small class="text-muted">Results for: "search"</small>
-            
+            @if (request('search')) 
+           <small class="text-muted">Results for: "{{ request('search') }}"</small>
+            @endif
         </div>
 
         <!-- Templates Grid -->
