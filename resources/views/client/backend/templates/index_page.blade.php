@@ -155,68 +155,71 @@
         </div>
 
         <!-- Templates Grid -->
-      
-            <div class="row">
-               
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card h-100 shadow-sm template-card">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <div class="template-icon bg-primary bg-opacity-10 text-primary rounded p-3">
-                                        <i class="ri-file-text-line fs-2"></i>
-                                    </div>
-                                
-                                        <span class="badge bg-warning">
-                                            <i class="ri-star-fill"></i> Featured
-                                        </span>
-                                    
-                                </div>
-
-                                <h5 class="card-title fw-bold mb-2">name</h5>
-                                <p class="card-text text-muted small mb-3">
-                                    description
-                                </p>
-
-                                <div class="d-flex gap-2 mb-3">
-                                    <span class="badge bg-light text-dark border">
-                                        <i class="ri-bookmark-line"></i> category
-                                    </span>
-                                    <span class="badge bg-success">
-                                       difficulty_level
-                                    </span>
-                                </div>
-
-                                <div class="mb-3">
-                                    <small class="text-muted">
-                                        <i class="ri-list-check"></i> placeholders fields to fill
-                                    </small>
-                                </div>
-
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <small class="text-muted">
-                                        <i class="ri-download-line"></i> usage_count uses
-                                    </small>
-                                    <a href=" " class="btn btn-sm btn-primary">
-                                        View Details
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-               
+ @if ($templates->count() > 0) 
+ <div class="row">
+@foreach ($templates as $template)        
+<div class="col-md-6 col-lg-4 mb-4">
+    <div class="card h-100 shadow-sm template-card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="template-icon bg-primary bg-opacity-10 text-primary rounded p-3">
+                    <i class="{{ $template->icon ?? 'ri-file-text-line' }} fs-2"></i>
+                </div>
+                    @if ($template->is_featured) 
+                    <span class="badge bg-warning">
+                        <i class="ri-star-fill"></i> Featured
+                    </span>
+                    @endif
+                
             </div>
+
+            <h5 class="card-title fw-bold mb-2">{{ $template->name }}</h5>
+            <p class="card-text text-muted small mb-3">
+                {{ Str::limit($template->name, 80)  }}
+            </p>
+
+            <div class="d-flex gap-2 mb-3">
+                <span class="badge bg-light text-dark border">
+                    <i class="ri-bookmark-line"></i> {{ $template->category->name }}
+                </span>
+                <span class="badge bg-{{ $template->difficulty_level  === 'beginner' ? 'success' : ($template->difficulty_level  === 'intermediate' ? 'warning' : 'danger') }} ">
+                        {{ ucfirst($template->difficulty_level) }}
+                    </span>
+            </div>
+
+            <div class="mb-3">
+                <small class="text-muted">
+                    <i class="ri-list-check"></i> {{ count($template->placeholders) }} fields to fill
+                </small>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">
+                    <i class="ri-download-line"></i> {{ number_format($template->usage_count) }} uses
+                </small>
+                <a href=" " class="btn btn-sm btn-primary">
+                    View Details
+                </a>
+            </div>
+        </div>
+    </div>
+</div> 
+@endforeach       
+               
+ </div>
 
             <!-- Pagination -->
             <div class="d-flex justify-content-center mt-4">
-              Pagination
+              {{ $templates->links() }}
             </div>
-        
+    @else     
             <!-- Empty State -->
             <div class="text-center py-5">
                 <i class="ri-inbox-line display-1 text-muted"></i>
                 <h4 class="mt-3">No Templates Found</h4>
                 <p class="text-muted">Try adjusting your filters or search terms.</p>
             </div>
+    @endif     
         
     </div>
 </div>
