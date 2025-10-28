@@ -30,7 +30,7 @@
             </div>
         </div>
 <div class="card-body p-4">
-    <form action=" " method="POST" id="templateUseForm">
+    <form action="{{ route('template.prompts.generate',$template) }}" method="POST" id="templateUseForm">
         @csrf
 
         <!-- Variation Name -->
@@ -142,7 +142,7 @@
 
         <!-- Submit Buttons -->
         <div class="d-flex gap-2 justify-content-between align-items-center pt-3 border-top">
-            <a href=" " class="btn btn-outline-secondary">
+            <a href="{{ route('template.prompts.show',$template) }}" class="btn btn-outline-secondary">
                 <i class="ri-arrow-left-line"></i> Back
             </a>
             <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
@@ -171,7 +171,7 @@
                     <div class="card-body">
                         <small class="text-muted d-block mb-2">Template Structure:</small>
                         <div class="alert alert-light small">
-                            <code style="white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem;">template_content</code>
+                            <code style="white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem;">{{ $template->template_content }}</code>
                         </div>
                     </div>
                 </div>
@@ -194,17 +194,18 @@
                 </div>
 
                 <!-- Usage Info -->
-                
-                    <div class="card shadow-sm mt-3">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <h6 class="text-muted mb-2">Remaining This Month</h6>
-                                <h2 class="text-success">
-                                   remaining_prompts
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
+        @if (!auth()->user()->isAdmin()) 
+        <div class="card shadow-sm mt-3">
+            <div class="card-body">
+                <div class="text-center">
+                    <h6 class="text-muted mb-2">Remaining This Month</h6>
+                    <h2 class="text-{{ auth()->user()->remaining_prompts > 2 ? 'success' : 'warning' }}">
+                       {{ auth()->user()->remaining_prompts }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+        @endif   
                 
             </div>
         </div>

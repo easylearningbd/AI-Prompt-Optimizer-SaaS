@@ -135,6 +135,7 @@ Route::controller(TemplateController::class)->group(function(){
     Route::get('/template/prompts/index','TemplatePromptsIndex')->name('template.prompts.index'); 
     Route::get('/template/prompts/show/{template}','TemplatePromptsShow')->name('template.prompts.show'); 
     Route::get('/template/prompts/use/{template}','TemplatePromptsUse')->name('template.prompts.use');
+    Route::post('/template/prompts/generate/{template}','TemplatePromptsGenerate')->name('template.prompts.generate');
      
     
 }); 

@@ -92,6 +92,13 @@ class TemplateController extends Controller
     }
      // End Method
 
+     public function TemplatePromptsGenerate(Request $request, PromptTemplate $template){
+
+        
+
+     }
+       // End Method
+
 
 
 } 
