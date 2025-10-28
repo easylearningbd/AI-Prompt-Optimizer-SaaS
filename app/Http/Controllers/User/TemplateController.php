@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\PromptTemplate;
 use App\Models\Category;
 use App\Services\GrokService;
+use App\Models\UserTemplateVariation;
 
 class TemplateController extends Controller
 {
@@ -148,9 +149,25 @@ class TemplateController extends Controller
         $variationName = $validated['variation_name'] ?? ( $template->name . ' - ' . now()->format('M d, Y h:i A'));
 
         /// Save data in Variation Table 
-        
+        $variation = UserTemplateVariation::create([
+            'user_id' => auth()->id(),
+            'template_id' => $template->id,
+            'variation_name' => $variationName,
+            'filled_placeholders' => $validated['placeholders'],
+            'generated_prompt' => $filledPrompt,
+            'optimized_prompt' => $result['optimized_prompt']
+        ]);
+
+        /// Increment tamplate usage count
+        $template->incrementUsage();
+
+        /// Increment user usage count 
+        if (!auth()->user()->isAdmin()) {
+            auth()->user()->increment('prompts_used_this_month');
+        }
 
 
+        return redirect()->route('template.prompts.index')->with('success','Template Optimized successfully!');
 
      }
        // End Method
