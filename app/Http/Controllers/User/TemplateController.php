@@ -128,6 +128,28 @@ class TemplateController extends Controller
 
         $validated = $request->validate($rules);
 
+        $filledPrompt = $template->fillTemplate($validated['placeholders']);
+
+        // Optimize with Grok Api 
+        $result = $this->grokService->optimizePrompt(
+            $filledPrompt,
+            $template->category->name,
+            $validated['language'],
+            $validated['output_format'], 
+        );
+
+        if (!$result['success']) {
+            return back()
+            ->withInput()
+            ->with('error',$result['error']);
+        }
+
+        //// Generate variation name if not provided 
+        $variationName = $validated['variation_name'] ?? ( $template->name . ' - ' . now()->format('M d, Y h:i A'));
+
+        /// Save data in Variation Table 
+        
+
 
 
      }

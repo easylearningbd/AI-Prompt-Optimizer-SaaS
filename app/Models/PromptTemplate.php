@@ -54,6 +54,18 @@ class PromptTemplate extends Model
         $this->increment('usage_count');
     }
 
+    public function fillTemplate(array $values): string {
+        $content = $this->template_content;
+
+        foreach($values as $key => $value){
+            $content = str_replace('{' . $key . '}',$value,$content);
+        }
+        return $content;
+    }
+
+
+
+
 
 }
  
