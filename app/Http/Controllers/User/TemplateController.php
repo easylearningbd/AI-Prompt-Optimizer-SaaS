@@ -173,5 +173,16 @@ class TemplateController extends Controller
        // End Method
 
 
+    public function TemplateMyVariations(){
+
+        $variations = UserTemplateVariation::where('user_id',auth()->id())
+            ->with(['template.category'])
+            ->latest()
+            ->paginate(12);
+        return view('client.backend.variation.my_variations',compact('variations'));
+    }
+    // End Method
+
+
 
 } 
