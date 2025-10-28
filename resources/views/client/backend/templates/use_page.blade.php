@@ -65,45 +65,50 @@
         @if ($placeholder['type'] === 'textarea') 
             <textarea 
                 class="form-control  " 
-                id="placeholder_key" 
-                name="placeholders " 
+                id="placeholder_{{ $placeholder['key'] }}" 
+                name="placeholders[{{ $placeholder['key'] }}]" 
                 rows="4"
-                placeholder="placeholder"
+                placeholder="{{ $placeholder['placeholder'] ?? '' }}"
                 required
-            >key</textarea>
+            >{{ $placeholder['key'] }}</textarea>
 
            @elseif ($placeholder['type'] === 'select')
             <select 
                 class="form-select  " 
-                id="placeholder_key" 
-                name="placeholders "
-                required >
-                <option value="">Select an option</option> 
-
-                        <option value=" "  >
-                            option
-                        </option>
-                    
+                id="placeholder_{{ $placeholder['key'] }}" 
+                name="placeholders[{{ $placeholder['key'] }}]"
+                {{ ($placeholder['required'] ?? false) ? 'required' : '' }} >
                 
+                <option value="">Select an option</option> 
+                @if (isset($placeholder['options'])) 
+                @foreach ($placeholder['options'] as $option) 
+                    <option value="{{$option}}" {{ $placeholder['key'] === $option ? 'selected' : '' }} >
+                       {{$option}}
+                    </option>
+                     @endforeach 
+                @endif 
             </select>
             @else 
             <input 
                 type="text" 
                 class="form-control " 
-                id="placeholder_ " 
-                name="placeholders " 
-                placeholder="placeholder"
-                value="key" >
-        
+                id="placeholder_{{ $placeholder['key'] }}" 
+                name="placeholders[{{ $placeholder['key'] }}]" 
+                placeholder="{{ $placeholder['placeholder'] ?? '' }}"
+                value="{{ old('placeholders.'.$placeholder['key']) }}"
+                {{ ($placeholder['required'] ?? false) ? 'required' : '' }}
+                 >        
             @endif
-            
-            <div class="invalid-feedback">message</div>
+            @error('placeholders.'.$placeholder['key']) 
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         
 
-        
+           @if (isset($placeholder['help'])) 
             <small class="text-muted d-block mt-1">
-                <i class="ri-information-line"></i> placeholder
+                <i class="ri-information-line"></i> {{ $placeholder['help'] }}
             </small>
+            @endif
         
     </div>
     @endforeach   
