@@ -183,6 +183,14 @@ class TemplateController extends Controller
     }
     // End Method
 
+    public function TemplateVariationsDetails(UserTemplateVariation $variation){
+
+        $variation->load(['template.category','user']);
+        return view('client.backend.variation.details_variations',compact('variation'));
+
+    }
+    // End Method
+
 
 
 } 

@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="d-grid gap-2">
-                    <a href=" " class="btn btn-sm btn-primary">
+                    <a href="{{ route('template.variation.details',$variation) }}" class="btn btn-sm btn-primary">
                         <i class="ri-eye-line"></i> View Details
                     </a>
                     <div class="btn-group" role="group">
