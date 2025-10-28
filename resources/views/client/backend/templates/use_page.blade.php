@@ -69,8 +69,8 @@
                 name="placeholders[{{ $placeholder['key'] }}]" 
                 rows="4"
                 placeholder="{{ $placeholder['placeholder'] ?? '' }}"
-                required
-            >{{ $placeholder['key'] }}</textarea>
+               {{ ($placeholder['required'] ?? false) ? 'required' : '' }}
+            >{{ old('placeholders.'.$placeholder['key'])  }}</textarea>
 
            @elseif ($placeholder['type'] === 'select')
             <select 
@@ -127,7 +127,7 @@
                     <option value="german">German</option>
                     <option value="chinese">Chinese</option>
                     <option value="japanese">Japanese</option>
-                    <option value="arabic">Arabic</option>
+                    <option value="hindi">Hindi</option>
                     <option value="bengali">Bengali</option>
                 </select>
             </div>

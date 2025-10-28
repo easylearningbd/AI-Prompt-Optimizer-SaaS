@@ -94,7 +94,41 @@ class TemplateController extends Controller
 
      public function TemplatePromptsGenerate(Request $request, PromptTemplate $template){
 
-        
+        /// Check subscription limits 
+        if (!auth()->user()->canOptimizePrompt() && !auth()->user()->isAdmin()) {
+            return back()->with('error','You have reached your montly prompt limit. Please upgrade your plan');
+        }
+
+        // Build Vaildation on field and placeholders 
+
+        $rules = [
+            'variation_name' => 'nullable|string',
+            'language' => 'required|in:english,spanish,french,german,chinese,japanese,hindi,bengali',
+            'output_format' => 'required|in:text,json'
+        ];
+
+        foreach($template->placeholders as $placeholder ){
+            $fieldRules = [];
+
+            if ($placeholder['required'] ?? false) {
+                $fieldRules[] = 'required';
+            } else {
+                $fieldRules[] = 'nullable';
+            }
+
+             $fieldRules[] = 'string';
+
+             if ($placeholder['type'] === 'text') {
+                $fieldRules[] = 'max:500';
+             }
+
+             $rules['placeholders.' . $placeholder['key']] = implode('|',$fieldRules);
+            
+        }
+
+        $validated = $request->validate($rules);
+
+
 
      }
        // End Method
