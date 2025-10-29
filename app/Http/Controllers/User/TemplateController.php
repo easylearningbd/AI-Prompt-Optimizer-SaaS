@@ -167,7 +167,7 @@ class TemplateController extends Controller
         }
 
 
-        return redirect()->route('template.prompts.index')->with('success','Template Optimized successfully!');
+        return redirect()->route('template.variation.details',$variation)->with('success','Template Optimized successfully!');
 
      }
        // End Method
