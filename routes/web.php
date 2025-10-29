@@ -12,6 +12,7 @@ use App\Http\Controllers\User\SubscriptionController;
 use App\Http\Controllers\User\NotificationController; 
 use App\Http\Controllers\Admin\AdminTemplateController;
 use App\Http\Controllers\User\TemplateController; 
+use App\Http\Controllers\User\ImagePromptController; 
 
 Route::get('/', function () {
     return view('welcome');
@@ -148,7 +149,13 @@ Route::controller(TemplateController::class)->group(function(){
     Route::delete('/variation/delete/{variation}','VariationsDelete')->name('variation.delete');
     
 }); 
- 
+
+
+
+ Route::controller(ImagePromptController::class)->group(function(){
+    Route::get('/image/prompts/index','ImagePromptsIndex')->name('image.prompts.index');  
+    
+}); 
  
 
 

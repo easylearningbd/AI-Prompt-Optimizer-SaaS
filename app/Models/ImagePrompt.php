@@ -10,7 +10,7 @@ class ImagePrompt extends Model
     use HasFactory;
  
     protected $guarded = [];
-  
+   
     protected $casts = [ 
         'is_public' => 'boolean',
     ];
