@@ -103,7 +103,7 @@
         <button 
             type="button" 
             class="btn btn-primary copy-btn-main" 
-            data-prompt="optimized_prompt"
+            data-prompt="{{ $variation->optimized_prompt }}"
         >
             <i class="ri-clipboard-line"></i> Copy Optimized Prompt
         </button>
@@ -116,7 +116,7 @@
             </button>
         </form>
 
-        <a href=" " class="btn btn-outline-primary">
+        <a href="{{ route('template.prompts.use',$variation->template) }}" class="btn btn-outline-primary">
             <i class="ri-refresh-line"></i> Create Another
         </a> 
         
@@ -138,12 +138,12 @@
             <div class="d-flex align-items-center mb-3">
                 <i class="ri-file-text-line fs-3 text-primary me-3"></i>
                 <div>
-                    <strong>template</strong>
+                    <strong>{{ $variation->template->name }}</strong>
                     <br>
-                    <small class="text-muted">category</small>
+                    <small class="text-muted">{{ $variation->template->category->name }}</small>
                 </div>
             </div>
-            <a href=" " class="btn btn-outline-primary btn-sm w-100">
+            <a href="{{ route('template.prompts.show',$variation->template) }}" class="btn btn-outline-primary btn-sm w-100">
                 View Template Details
             </a>
         </div>
@@ -159,21 +159,21 @@
         <div class="card-body">
             <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                 <span class="text-muted">Created:</span>
-                <strong>created_at</strong>
+                <strong>{{ $variation->created_at->format('M d, Y') }}</strong>
             </div>
             <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                 <span class="text-muted">Time:</span>
-                <strong>created_at</strong>
+                <strong>{{ $variation->created_at->format('h:i A') }}</strong>
             </div>
             <div class="d-flex justify-content-between">
                 <span class="text-muted">Status:</span>
-                
+                @if ($variation->is_favorite) 
                     <span class="badge bg-warning">
                         <i class="ri-star-fill"></i> Favorite
                     </span>
-                
+                @else 
                     <span class="badge bg-secondary">Normal</span>
-                
+                 @endif
             </div>
         </div>
     </div>
