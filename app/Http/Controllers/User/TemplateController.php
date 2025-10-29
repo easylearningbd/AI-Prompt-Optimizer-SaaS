@@ -204,5 +204,18 @@ class TemplateController extends Controller
     // End Method
 
 
+     public function VariationsDelete(UserTemplateVariation $variation){
+
+        $variation->delete();
+
+        $notification = array(
+            'message' => 'My Variation Deleted Successfully',
+            'alert-type' => 'success'
+        ); 
+        return redirect()->back()->with($notification); 
+    }
+    // End Method
+
+
 
 } 

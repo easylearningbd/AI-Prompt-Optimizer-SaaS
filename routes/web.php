@@ -145,6 +145,7 @@ Route::controller(TemplateController::class)->group(function(){
     Route::get('/template/variation/details/{variation}','TemplateVariationsDetails')->name('template.variation.details');
     
     Route::post('/variation/favorite/{variation}','VariationsFavorite')->name('variation.favorite');
+    Route::delete('/variation/delete/{variation}','VariationsDelete')->name('variation.delete');
     
 }); 
  

@@ -65,13 +65,15 @@
         </button>
     </form>
 
-                        <form action=" " method="POST" class="flex-fill" onsubmit="return confirm('Delete this variation?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger w-100">
-                                <i class="ri-delete-bin-line"></i>
-                            </button>
-                        </form>
+        <form action="{{ route('variation.delete',$variation) }}" method="POST" class="flex-fill" onsubmit="return confirm('Delete this variation?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-outline-danger w-100">
+                <i class="ri-delete-bin-line"></i>
+            </button>
+        </form>
+
+
                     </div>
                 </div>
             </div>
