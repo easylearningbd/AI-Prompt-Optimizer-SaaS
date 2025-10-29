@@ -142,7 +142,9 @@ Route::controller(TemplateController::class)->group(function(){
 
 Route::controller(TemplateController::class)->group(function(){
     Route::get('/template/my/variations','TemplateMyVariations')->name('template.my.variations'); 
-    Route::get('/template/variation/details/{variation}','TemplateVariationsDetails')->name('template.variation.details'); 
+    Route::get('/template/variation/details/{variation}','TemplateVariationsDetails')->name('template.variation.details');
+    
+    Route::post('/variation/favorite/{variation}','VariationsFavorite')->name('variation.favorite');
     
 }); 
  

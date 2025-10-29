@@ -57,12 +57,14 @@
                         <i class="ri-eye-line"></i> View Details
                     </a>
                     <div class="btn-group" role="group">
-                        <form action=" " method="POST" class="flex-fill">
-                            @csrf
-                            <button type="submit" class="btn btn-sm btn-{{ $variation->is_favorite ? 'warning' : 'outline-warning' }} w-100">
-                                <i class="ri-star-line"></i>
-                            </button>
-                        </form>
+                        
+    <form action="{{ route('variation.favorite',$variation) }}" method="POST" class="flex-fill">
+        @csrf
+        <button type="submit" class="btn btn-sm btn-{{ $variation->is_favorite ? 'warning' : 'outline-warning' }} w-100">
+            <i class="ri-star-line"></i>
+        </button>
+    </form>
+
                         <form action=" " method="POST" class="flex-fill" onsubmit="return confirm('Delete this variation?')">
                             @csrf
                             @method('DELETE')

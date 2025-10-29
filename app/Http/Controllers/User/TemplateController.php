@@ -191,6 +191,18 @@ class TemplateController extends Controller
     }
     // End Method
 
+    public function VariationsFavorite(UserTemplateVariation $variation){
+
+        $variation->toggleFavorite();
+
+        $notification = array(
+            'message' => 'Favorites Status Updated Successfully',
+            'alert-type' => 'success'
+        ); 
+        return redirect()->back()->with($notification); 
+    }
+    // End Method
+
 
 
 } 
