@@ -100,54 +100,55 @@
 
         <!-- Results -->
         <div class="mb-4">
-            <h5>imagePrompts Found</h5>
+            <h5>{{ $imagePrompts->total() }} {{ Str::plural('Prompt',$imagePrompts->total()) }} Found</h5>
         </div>
 
-        
+  @if ($imagePrompts->count() > 0) 
   <div class="row">
-              
+   @foreach ($imagePrompts as $prompt)     
     <div class="col-md-6 col-lg-4 mb-4">
         <div class="card h-100 shadow-sm image-prompt-card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start mb-3">
-                    <span class="badge bg-primary">
-                        style
+                    <span class="badge bg-{{ $prompt->style === 'realistic' ? 'primary' : ($prompt->style === 'anime' ? 'danger' : 'info') }} ">
+                       {{ ucfirst(str_replace('_', ' ',$prompt->style )) }}
                     </span> 
                 </div>
 
-                <h5 class="card-title fw-bold mb-2">title</h5>
+                <h5 class="card-title fw-bold mb-2">{{ Str::list($prompt->title, 50) }}</h5>
                 <p class="card-text text-muted small mb-3">
-                    original_description
+                   {{ Str::list($prompt->original_description, 100) }}
                 </p>
 
                 <div class="d-flex flex-wrap gap-2 mb-3">
                     <span class="badge bg-light text-dark border">
-                        <i class="ri-aspect-ratio-line"></i> aspect_ratio
+                        <i class="ri-aspect-ratio-line"></i> {{ $prompt->aspect_ratio }}
                     </span>
-                    
+                       @if ($prompt->mood)  
                         <span class="badge bg-light text-dark border">
-                            <i class="ri-emotion-line"></i> mood
+                            <i class="ri-emotion-line"></i> {{ $prompt->mood }}
                         </span>
+                       @endif
                     
                     <span class="badge bg-light text-dark border">
-                        <i class="ri-hd-line"></i> quality_level
+                        <i class="ri-hd-line"></i> {{ strtoupper($prompt->quality_level) }}
                     </span>
                 </div>
 
                 <div class="d-flex gap-3 text-muted small mb-3">
-                    <span><i class="ri-eye-line"></i> views_count</span>
-                    <span><i class="ri-download-line"></i> copies_count</span>
+                    <span><i class="ri-eye-line"></i> {{ $prompt->views_count }}</span>
+                    <span><i class="ri-download-line"></i> {{ $prompt->copies_count }}</span>
                         
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center gap-2">
                         
-                            <img src=" " alt=" " class="rounded-circle" width="24" height="24">
+            <img id="showImage" src="{{ (!empty($prompt->user->photo)) ? url('upload/admin_images/'.$prompt->user->photo) : url('upload/no_image.jpg') }}" class="rounded-circle avatar-xl" style="width:32px; height:32px;">
                         
                             <i class="ri-user-line"></i>
                         
-                        <small>username</small>
+                        <small>{{ $prompt->user->name }}</small>
                     </div>
                     <a href=" " class="btn btn-sm btn-primary">
                         View
@@ -155,15 +156,16 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
+   @endforeach      
 
    </div>
 
     <!-- Pagination -->
     <div class="d-flex justify-content-center mt-4">
-        Pagination
+        {{ $imagePrompts->links() }}
     </div>
-
+    @else
     <div class="text-center py-5">
         <i class="ri-image-line display-1 text-muted"></i>
         <h4 class="mt-3">No Image Prompts Found</h4>
@@ -172,6 +174,7 @@
             <i class="ri-add-line"></i> Create Image Prompt
         </a>
     </div>
+    @endif  
        
     </div>
 </div>
