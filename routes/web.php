@@ -155,6 +155,7 @@ Route::controller(TemplateController::class)->group(function(){
  Route::controller(ImagePromptController::class)->group(function(){
     Route::get('/image/prompts/index','ImagePromptsIndex')->name('image.prompts.index');  
     Route::get('/image/prompts/create','ImagePromptsCreate')->name('image.prompts.create');
+    Route::post('/image/prompts/store','ImagePromptsStore')->name('image.prompts.store');
     
 }); 
  

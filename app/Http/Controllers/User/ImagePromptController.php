@@ -8,9 +8,18 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\ImagePrompt;
 use App\Models\Category;
-
+use App\Services\ImagePromptService;
+ 
 class ImagePromptController extends Controller
 {
+
+    protected $imagePromptService;
+
+    public function __construct(ImagePromptService $imagePromptService){
+        $this->imagePromptService = $imagePromptService; 
+    }
+
+    
     public function ImagePromptsIndex(Request $request){
 
      $query = ImagePrompt::public()->with(['user','category']);
@@ -79,6 +88,41 @@ class ImagePromptController extends Controller
         return view('client.backend.image-prompts.create_page',compact('categories','styles','aspectRatios'));
     }
      //End Method 
+
+     public function ImagePromptsStore(Request $request){
+
+         /// Check subscription limits 
+        if (!auth()->user()->canOptimizePrompt() && !auth()->user()->isAdmin()) {
+            return back()->with('error','You have reached your montly prompt limit. Please upgrade your plan');
+        }
+
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'category_id' => 'nullable|exists:categories,id',
+            'original_description' => 'required|string',
+            'style' => 'required|string',
+            'aspect_ratio' => 'required|string',
+            'mood' => 'nullable|string',
+            'lighting' => 'nullable|string',
+            'color_palette' => 'nullable|string',
+            'quality_level' => 'required|in:standard,hd,4k,8k',
+            'title' => 'required|string',
+            'is_public' => 'boolean',
+        ]);
+
+        // Optimize the prompt using Grok API 
+        $result = $this->imagePromptService->optimizeImagePrompt($validated);
+
+        if (!$result['success']) {
+            return back()->withInput()->with('error', $result['error']);
+        }
+
+        /// Store data in your image_prompts table 
+        
+
+
+     }
+      //End Method 
 
 
 }
