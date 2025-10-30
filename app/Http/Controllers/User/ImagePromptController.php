@@ -118,9 +118,32 @@ class ImagePromptController extends Controller
         }
 
         /// Store data in your image_prompts table 
-        
+        $imagePrompt = ImagePrompt::create([
+            'user_id' => auth()->id(),
+            'category_id' => $validated['category_id'],
+            'title' => $validated['title'],
+            'original_description' => $validated['original_description'],
+            'optimized_prompt' => $result['optimized_prompt'],
+            'style' => $validated['style'],
+            'aspect_ratio' => $validated['aspect_ratio'],
+            'mood' => $validated['mood'],
+            'lighting' => $validated['lighting'],
+            'color_paletter' => $validated['color_palette'],
+            'quality_level' => $validated['quality_level'],
+            'is_public' => $request->boolean('is_public',true),
+        ]);
 
 
+        if (!auth()->user()->isAdmin()) {
+            auth()->user()->increment('prompts_used_this_month');
+        }
+
+       $notification = array(
+            'message' => 'Image Prompt optimized Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('image.prompts.index')->with($notification); 
      }
       //End Method 
 

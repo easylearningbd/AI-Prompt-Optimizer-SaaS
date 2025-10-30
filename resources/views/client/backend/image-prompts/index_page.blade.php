@@ -115,9 +115,9 @@
                     </span> 
                 </div>
 
-                <h5 class="card-title fw-bold mb-2">{{ Str::list($prompt->title, 50) }}</h5>
+   <h5 class="card-title fw-bold mb-2">{{ Str::limit($prompt->title, 50) }}</h5>
                 <p class="card-text text-muted small mb-3">
-                   {{ Str::list($prompt->original_description, 100) }}
+                   {{ Str::limit($prompt->original_description, 100) }}
                 </p>
 
                 <div class="d-flex flex-wrap gap-2 mb-3">
