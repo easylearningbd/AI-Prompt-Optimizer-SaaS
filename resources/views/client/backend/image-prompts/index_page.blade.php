@@ -15,7 +15,7 @@
                     </p>
                 </div>
                 <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-                    <a href=" " class="btn btn-light btn-lg">
+                    <a href="{{ route('image.prompts.create') }}" class="btn btn-light btn-lg">
                         <i class="ri-add-line"></i> Create Image Prompt
                     </a>
                 </div>
@@ -170,7 +170,7 @@
         <i class="ri-image-line display-1 text-muted"></i>
         <h4 class="mt-3">No Image Prompts Found</h4>
         <p class="text-muted">Try adjusting your filters or create your first image prompt!</p>
-        <a href=" " class="btn btn-primary mt-3">
+        <a href="{{ route('image.prompts.create') }}" class="btn btn-primary mt-3">
             <i class="ri-add-line"></i> Create Image Prompt
         </a>
     </div>

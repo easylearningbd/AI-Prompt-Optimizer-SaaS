@@ -55,5 +55,30 @@ class ImagePromptController extends Controller
     }
     //End Method 
 
+    public function ImagePromptsCreate(){
+
+        $categories = Category::active()->get();
+        $styles = [
+            'realistic' => 'Realistic/Photography',
+            'artistic' => 'Artistic/Painting',
+            'anime' => 'Anime/Manga',
+            'digital_art' => 'Digital Art',
+            '3d_render' => '3D Render',
+            'oil_painting' => 'Oil Painting',
+            'watercolor' => 'Watercolor',
+            'sketch' => 'Sketch/Drawing',
+        ];
+        $aspectRatios = [ 
+            '1:1' => 'Square (1:1)',
+            '16:9' => 'Landscape (16:9)',
+            '9:16' => 'Portrait (9:16)',
+            '4:3' => 'Standard (4:3)',
+            '3:2' => 'Classic (3:2)',
+        ];
+
+        return view('client.backend.image-prompts.create_page',compact('categories','styles','aspectRatios'));
+    }
+     //End Method 
+
 
 }
