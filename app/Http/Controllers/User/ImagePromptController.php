@@ -147,5 +147,14 @@ class ImagePromptController extends Controller
      }
       //End Method 
 
+    public function ImagePromptsShow(ImagePrompt $imagePrompt ){
+
+        $imagePrompt->incrementViews();
+        $imagePrompt->load(['user','category']);
+
+        return view('client.backend.image-prompts.show_page',compact('imagePrompt'));
+    }
+     //End Method 
+
 
 }

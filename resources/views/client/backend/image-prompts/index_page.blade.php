@@ -150,7 +150,7 @@
                         
                         <small>{{ $prompt->user->name }}</small>
                     </div>
-                    <a href=" " class="btn btn-sm btn-primary">
+                    <a href="{{ route('image.prompts.show',$prompt) }}" class="btn btn-sm btn-primary">
                         View
                     </a>
                 </div>
