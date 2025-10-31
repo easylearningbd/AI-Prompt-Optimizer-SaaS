@@ -15,7 +15,7 @@ use App\Http\Controllers\User\TemplateController;
 use App\Http\Controllers\User\ImagePromptController; 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home.index');
 });
 
 //// All User Protected Routes
