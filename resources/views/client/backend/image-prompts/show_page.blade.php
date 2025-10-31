@@ -163,15 +163,15 @@
         <div class="card-body">
             <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                 <span class="text-muted">Views:</span>
-                <strong>views_count</strong>
+                <strong>{{ number_format($imagePrompt->views_count) }}</strong>
             </div>
             <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                 <span class="text-muted">Copies:</span>
-                <strong>copies_count</strong>
+                <strong>{{ number_format($imagePrompt->copies_count) }}</strong>
             </div> 
             <div class="d-flex justify-content-between">
                 <span class="text-muted">Created:</span>
-                <strong>created_at</strong>
+                <strong>{{ $imagePrompt->created_at->format('M d,Y') }}</strong>
             </div>
         </div>
     </div>
@@ -181,6 +181,46 @@
     </div>
 </div>
 
- 
+ <script>
+/// Copy to clipboard functionality 
+function copyToClipboard(text,button) {
+    navigator.clipboard.writeText(text).then(() => {
+        const originalHtml = button.innerHTML;
+
+        /// SHOW Success message
+        button.innerHTML = 'Copied!';
+        button.classList.add('btn-success');
+        button.classList.remove('btn-outline-primary','btn-primary');
+
+        // Track copy count 
+        fetch('{{ route("prompts.copy",$imagePrompt) }}',{
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+            }
+        });
+
+        // Restore Original state after 2 sec
+        setTimeout(() => {
+            button.innerHTML = originalHtml;
+            button.classList.remove('btn-success');
+            button.classList.add('btn-outline-primary')
+        },2000);
+    }).catch(err => {
+        alert('Faild to copy to clipboard');
+    });
+}
+
+
+// All Copy buttons 
+document.querySelectorAll('.copy-btn, .copy-btn-main, .copy-btn-sidebar').forEach(button => {
+    button.addEventListener('click', function(){
+        const promptText = this.getAttribute('data-prompt');
+        copyToClipboard(promptText,this);
+    });
+});
+
+</script>
  
 @endsection
