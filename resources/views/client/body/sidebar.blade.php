@@ -32,7 +32,7 @@
         </li>
 
         <li class="side-nav-item">
-            <a href="{{ route('admin.dashboard') }}" class="side-nav-link">
+            <a href="{{ route('dashboard') }}" class="side-nav-link">
                 <span class="menu-icon"><i class="ti ti-dashboard"></i></span>
                 <span class="menu-text"> Dashboard </span>
                 <span class="badge bg-danger rounded-pill">9+</span>
